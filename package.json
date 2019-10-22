@@ -1,27 +1,42 @@
 {
-  "name": "hdr_mvp_gateway_middleware",
-  "version": "0.0.1",
-  "description": "HDR Gateway Data Layer utilising GraphQL",
-  "main": "index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://TrevorWardCIC@bitbucket.org/hdr_mvp_gateway/hdr_mvp_gateway_middleware.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/hdr_mvp_gateway/hdr_mvp_gateway_middleware#readme",
-  "dependencies": {
-    "apollo-server": "^2.9.6",
-    "graphql": "^14.5.8"
-  },
-  "devDependencies": {
-    "eslint": "^6.5.1",
-    "nodemon": "^1.19.4"
-  }
+    "name": "hdr_mvp_gateway_middleware",
+    "version": "0.0.1",
+    "description": "HDR Gateway Data Layer utilising GraphQL",
+    "main": "index.js",
+    "scripts": {
+        "start": "node src/index.js",
+        "dev": "nodemon src/index.js",
+        "test": "jest --coverage",
+        "testw": "jest --watch",
+        "lint": "eslint src/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://TrevorWardCIC@bitbucket.org/hdr_mvp_gateway/hdr_mvp_gateway_middleware.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "homepage": "https://bitbucket.org/hdr_mvp_gateway/hdr_mvp_gateway_middleware#readme",
+    "dependencies": {
+        "apollo-server": "^2.9.6",
+        "graphql": "^14.5.8"
+    },
+    "devDependencies": {
+        "eslint": "^6.5.1",
+        "jest": "^24.9.0",
+        "nodemon": "^1.19.4"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "testPathIgnorePatterns": [
+            "/node_modules/",
+            "./dist"
+        ],
+        "collectCoverageFrom": [
+            "*.js"
+        ],
+        "coveragePathIgnorePatterns": [
+            "/node_modules/"
+        ]
+    }
 }
