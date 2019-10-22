@@ -4,7 +4,10 @@
   "description": "HDR Gateway Data Layer utilising GraphQL",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/"
   },
   "repository": {
     "type": "git",
@@ -12,5 +15,13 @@
   },
   "author": "",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/hdr_mvp_gateway/hdr_mvp_gateway_middleware#readme"
+  "homepage": "https://bitbucket.org/hdr_mvp_gateway/hdr_mvp_gateway_middleware#readme",
+  "dependencies": {
+    "apollo-server": "^2.9.6",
+    "graphql": "^14.5.8"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "nodemon": "^1.19.4"
+  }
 }
