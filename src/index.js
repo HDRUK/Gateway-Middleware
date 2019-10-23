@@ -1,30 +1,32 @@
 const { ApolloServer } = require("apollo-server");
 
-const books = [
-    {
-        title: "Harry Potter and the Sorcerer's stone",
-        author: "J.K. Rowling"
-    },
-    {
-        title: "Jurassic Park",
-        author: "Michael Crichton"
-    }
-];
+// const books = [
+//     {
+//         title: "Harry Potter and the Sorcerer's stone",
+//         author: "J.K. Rowling"
+//     },
+//     {
+//         title: "Jurassic Park",
+//         author: "Michael Crichton"
+//     }
+// ];
 
 // The GraphQL schema in string form
-const typeDefs = `
-  type Query { books: [Book] }
-  type Book { title: String, author: String }
-`;
+// const typeDefs = `
+//   type Query { books: [Book] }
+//   type Book { title: String, author: String }
+// `;
 
-// The resolvers
-const resolvers = {
-    Query: { books: () => books }
-};
+// // The resolvers
+// const resolvers = {
+//     Query: { books: () => books }
+// };
+
+const typeDefs = require("./schema/schema");
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers,
+    // resolvers,
     formatError: err => {
         if (err.originalError && err.originalError.error_message) {
             err.message = err.originalError.error_message;
