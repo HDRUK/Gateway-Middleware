@@ -8,7 +8,8 @@
         "dev": "nodemon src/index.js",
         "test": "jest --coverage",
         "testw": "jest --watch",
-        "lint": "eslint src/"
+        "lint": "eslint src/",
+        "sonarQube": "sonar-scanner"
     },
     "repository": {
         "type": "git",
@@ -24,19 +25,7 @@
     "devDependencies": {
         "eslint": "^6.5.1",
         "jest": "^24.9.0",
-        "nodemon": "^1.19.4"
-    },
-    "jest": {
-        "testEnvironment": "node",
-        "testPathIgnorePatterns": [
-            "/node_modules/",
-            "./dist"
-        ],
-        "collectCoverageFrom": [
-            "*.js"
-        ],
-        "coveragePathIgnorePatterns": [
-            "/node_modules/"
-        ]
+        "nodemon": "^1.19.4",
+        "sonar-scanner": "^3.1.0"
     }
 }
