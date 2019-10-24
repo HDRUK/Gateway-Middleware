@@ -1,28 +1,17 @@
 const { gql } = require("apollo-server");
 
-// const userSchema = require("./user");
-// const bundleSchema = require("./bundle");
-// const allocationSchema = require("./allocation");
-// const fileSchema = require("./file/file");
-
-// const linkSchema = gql`
-//   type Query {
-//     _: Boolean
-//   }
-
-//   type Mutation {
-//     _: Boolean
-//   }
-
-//   type Subscription {
-//     _: Boolean
-//   }
-// `;
-
-// module.exports = [linkSchema, bundleSchema, allocationSchema, userSchema, fileSchema];
-
 const typeDefs = gql`
-  # Your schema will go here
+    type Query {
+        searchAuditLog: [SearchAudit_log]
+    }
+    type SearchAudit_log {
+        searchAudit_ID: ID
+        search_user_ID: String
+        search_Detail: String
+        search_end_point: String
+        created_on: String
+        last_updated: String
+    }
 `;
 
 module.exports = typeDefs;

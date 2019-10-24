@@ -1,26 +1,9 @@
 const { ApolloServer } = require("apollo-server");
+require("dotenv").config();
 
-const books = [
-    {
-        title: "Harry Potter and the Sorcerer's stone",
-        author: "J.K. Rowling"
-    },
-    {
-        title: "Jurassic Park",
-        author: "Michael Crichton"
-    }
-];
-
-// The GraphQL schema in string form
-const typeDefs = `
-  type Query { books: [Book] }
-  type Book { title: String, author: String }
-`;
-
-// The resolvers
-const resolvers = {
-    Query: { books: () => books }
-};
+const logger = require("./utils/logger");
+const typeDefs = require("./schema/schema");
+const resolvers = require("./resolvers/resolvers");
 
 const server = new ApolloServer({
     typeDefs,
@@ -29,10 +12,12 @@ const server = new ApolloServer({
         if (err.originalError && err.originalError.error_message) {
             err.message = err.originalError.error_message;
         }
-
+        logger.log({
+            level: "error",
+            message: `${Date()} - ${err.message}`
+        });
         return err;
     }
-    //   formatResponse?: Function
 });
 
 server.listen(5001).then(({ url }) => {
