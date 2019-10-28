@@ -6,8 +6,8 @@
     "scripts": {
         "start": "node src/index.js",
         "dev": "nodemon src/index.js",
-        "test": "jest --coverage",
-        "testw": "jest --watch",
+        "test:coverage": "jest --coverage",
+        "test": "jest --watch",
         "lint": "eslint src/",
         "sonarQube": "sonar-scanner"
     },
