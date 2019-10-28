@@ -1,28 +1,30 @@
 const query = require("./searchAuditLog_resolver");
 
-const getSearchAuditLogMock = {
-    getSearchAuditLog: [
-        {
-            searchAudit_ID: "1",
-            search_user_ID: "ANON ",
-            search_Detail: "https://theapi/thesearch?param1=1 ",
-            search_end_point: "theapi ",
-            created_on: "2019-10-17 14:38:57.459205+01",
-            last_updated: "2019-10-17 14:38:57.459205+01"
-        },
-        {
-            searchAudit_ID: "2",
-            search_user_ID: "ANON ",
-            search_Detail: "https://theapi/thesearch?param1=1 ",
-            search_end_point: "theapi ",
-            created_on: "2019-10-17 14:39:33.76316+01",
-            last_updated: "2019-10-17 14:39:33.76316+01"
-        }
-    ]
-};
+// Currently working on tests so code left in until resolved.
 
-const obj = { getSearchAuditLog: getSearchAuditLogMock };
-const args = {};
+// const getSearchAuditLogMock = {
+//     getSearchAuditLog: [
+//         {
+//             searchAudit_ID: "1",
+//             search_user_ID: "ANON ",
+//             search_Detail: "https://theapi/thesearch?param1=1 ",
+//             search_end_point: "theapi ",
+//             created_on: "2019-10-17 14:38:57.459205+01",
+//             last_updated: "2019-10-17 14:38:57.459205+01"
+//         },
+//         {
+//             searchAudit_ID: "2",
+//             search_user_ID: "ANON ",
+//             search_Detail: "https://theapi/thesearch?param1=1 ",
+//             search_end_point: "theapi ",
+//             created_on: "2019-10-17 14:39:33.76316+01",
+//             last_updated: "2019-10-17 14:39:33.76316+01"
+//         }
+//     ]
+// };
+
+// const obj = { getSearchAuditLog: getSearchAuditLogMock };
+// const args = {};
 
 describe("searchAuditLog_resolver.js", () => {
     beforeAll(() => {
