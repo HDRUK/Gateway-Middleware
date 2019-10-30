@@ -2,7 +2,7 @@ const { gql } = require("apollo-server");
 
 const typeDefs = gql`
     type Query {
-        searchAuditLog: [SearchAudit_log]
+        getSearchAuditLog: [SearchAudit_log]
     }
     type SearchAudit_log {
         searchAudit_ID: ID

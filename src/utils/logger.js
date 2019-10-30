@@ -1,20 +1,27 @@
 const winston = require("winston");
+const winstonDailyRotateFile = require("winston-daily-rotate-file");
 
-const logger = winston.createLogger({
-    level: "info",
-    format: winston.format.json(),
-    defaultMeta: { service: "user-service" },
-    transports: [new winston.transports.File({ filename: "log/error.log", level: "error" })]
+const logFormat = winston.format.combine(
+    winston.format.colorize(),
+    winston.format.timestamp(),
+    winston.format.align(),
+    winston.format.printf(info => `${info.timestamp} - ${info.level}  - ${info.message}`)
+);
+
+winston.loggers.add("customLogger", {
+    format: logFormat,
+    transports: [
+        new winstonDailyRotateFile({
+            filename: "./log/custom-%DATE%.log",
+            datPattern: "YYYY-MM-DD",
+            level: "info"
+        }),
+        new winston.transports.Console({
+            level: "info"
+        })
+    ]
 });
 
-/* eslint-disable */
-// eslint is reporting - 'process' is not defined  no-undef
-if (process.env.NODE_ENV === "local") {
-    /* eslint-enable */
-    logger.add(
-        new winston.transports.Console({
-            format: winston.format.simple()
-        })
-    );
-}
+const logger = winston.loggers.get("customLogger");
+
 module.exports = logger;
