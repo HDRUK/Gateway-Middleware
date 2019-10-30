@@ -5,10 +5,7 @@ const logger = require("./utils/logger");
 const typeDefs = require("./schema/schema");
 const resolvers = require("./resolvers/resolvers");
 
-/* eslint-disable */
-//  error  'process' is not defined  no-undef
 const port = process.env.PORT;
-/* eslint-enable */
 
 const server = new ApolloServer({
     typeDefs,
