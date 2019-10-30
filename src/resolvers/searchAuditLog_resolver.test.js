@@ -28,11 +28,7 @@ const query = require("./searchAuditLog_resolver");
 
 describe("searchAuditLog_resolver.js", () => {
     beforeAll(() => {
-        /* eslint-disable */
-        // eslint is reporting - 'process' is not defined  no-undef
         process.env = Object.assign(process.env, {
-            /* eslint-enable */
-
             NODE_ENV: "local",
             DATABASE: "thedatabase",
             DATABASE_USER: "theuser",
