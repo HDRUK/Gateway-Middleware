@@ -20,6 +20,28 @@
 >
 > `npm run dev` To run in node monitor mode. `npm start` Will run without monitor
 
+### Setup the .env file
+
+The following values need to be configured (There is a .env-example)
+
+DATABASE=
+DATABASE_USER=
+DATABASE_PASSWORD=
+DATABASE_HOST=
+DATABASE_PORT=
+PORT=5001
+NODE_ENV=local
+
+API_BASE_URL=https://metadata-catalogue.org/hdruk/api/
+API_LOGIN=authentication/login
+API_LOGOUT=authentication/logout
+API_ALL_SEARCH=dataModels
+
+API_DOMAINTYPES=DataElement, DataModel
+API_DATAMODELTYPES=Data Asset
+
+### The GraphQL Queries / Mutations
+
 ---
 
 ### Useful sites:

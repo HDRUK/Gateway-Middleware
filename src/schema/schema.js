@@ -3,9 +3,10 @@ const { gql } = require("apollo-server");
 const typeDefs = gql`
     type Query {
         getSearchAuditLog: [SearchAudit_log]
-        hdrNoSearch: HDR_MetaData
+        hdrDataModelSearch: HDR_MetaData
         hdrCatalogueLogin: HDR_CatalogueLogin
         hdrCatalogueLogout: HDR_CatalogueLogout
+        hdrCatalogueItemsSearch(searchTerm: String, recordOffset: Int!, recordLimit: Int!): HDR_MetaData
     }
     type SearchAudit_log {
         searchAudit_ID: ID
@@ -25,11 +26,21 @@ const typeDefs = gql`
         id: String
         domainType: String
         label: String
+        aliases: [String]
         description: String
-        documentationVersion: String
-        type: String
         author: String
         organisation: String
+        editable: String
+        documentationVersion: String
+        lastUpdated: String
+        classifiers: [HDR_Classifier_Record]
+        type: String
+        finalised: String
+    }
+    type HDR_Classifier_Record {
+        id: String
+        label: String
+        lastUpdated: String
     }
     type HDR_CatalogueLogin {
         status: String
