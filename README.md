@@ -42,7 +42,10 @@ API_DATAMODELTYPES=Data Asset
 
 ### The GraphQL Queries / Mutations
 
----
+The main Query available is
+
+> hdrCatalogueItemsSearch(searchTerm: String, recordOffset: Int!, recordLimit: Int!)  
+> The recordOffset and recordLimit are required.
 
 ### Useful sites:
 
@@ -51,3 +54,7 @@ API_DATAMODELTYPES=Data Asset
 [Apollo Tutorial](https://www.apollographql.com/docs/tutorial/)
 
 ---
+
+```
+
+```
