@@ -11,7 +11,7 @@ module.exports = {
                 },
                 body: JSON.stringify({
                     username: "trevor.ward-cic-uk@ibm.com",
-                    password: "Development002!"
+                    password: "xxxxxxxxxx!"
                 })
             })
                 .then(res => {
