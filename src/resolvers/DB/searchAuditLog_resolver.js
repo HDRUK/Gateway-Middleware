@@ -1,6 +1,6 @@
-const dbConnect = require("../db/db");
+const dbConnect = require("../../db/db");
 
-const queryString = `SELECT "searchAudit_ID", "search_user_ID", "search_Detail", "search_end_point", created_on::text, last_updated::text from "searchAudit_log"`;
+const queryString = `SELECT "searchaudit_id", "searchaudit_user_id", "searchaudit_detail", "searchaudit_end_point", "searchaudit_record_offset", "searchaudit_record_limit", searchaudit_created_on::text, searchaudit_updated_on::text from "searchaudit_log"`;
 
 module.exports = {
     Query: {
