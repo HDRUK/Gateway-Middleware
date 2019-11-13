@@ -11,6 +11,9 @@ const typeDefs = gql`
         hdrCatalogueLogout: HDR_CatalogueLogout
         hdrCatalogueItemsSearch(searchTerm: String, recordOffset: Int!, recordLimit: Int!): HDR_MetaData
     }
+    type Mutation {
+        searchSave(userId: String!): SearchSaveResult
+    }
     type SearchAudit_log {
         searchaudit_id: ID
         searchaudit_user_id: String
@@ -43,6 +46,10 @@ const typeDefs = gql`
         searchsort_searchaudit_id: ID
         searchsort_created_on: String
         searchsort_updated_on: String
+    }
+    type SearchSaveResult {
+        status: String
+        message: String
     }
     type HDR_MetaData {
         status: String
