@@ -25,8 +25,8 @@ ENV API_BASE_URL=https://metadata-catalogue.org/hdruk/api/
 ENV API_LOGIN=authentication/login 
 ENV API_LOGOUT=authentication/logout 
 ENV API_ALL_SEARCH=dataModels 
-ENV API_DOMAINTYPES=DataElement, DataModel 
-ENV API_DATAMODELTYPES=Data, Asset 
+ENV API_DOMAINTYPES=DataElement DataModel 
+ENV API_DATAMODELTYPES=Data Asset 
   
 # Start the app  
 CMD [ "npm", "start"]  
