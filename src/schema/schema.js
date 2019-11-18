@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server-express");
+const { gql } = require("apollo-server");
 
 const searchSchema = require("./DB/search_schema");
 const hdrAPISchema = require("./HDR/hdrAPI_schema");
