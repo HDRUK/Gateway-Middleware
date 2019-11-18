@@ -1,13 +1,13 @@
 const typeDefs = require("./schema");
 
-describe("schema.js", () => {
+describe("Check that the correct resolvers are included and defined", () => {
     beforeEach(() => {});
 
     it("should test that the Queries are all defined", () => {
         expect(typeDefs.definitions[0].name.value).toEqual("Query");
-
         expect(typeDefs.definitions[0].fields.length).toEqual(8);
     });
+
     it("Should check that the getSearchAuditLog Query is defined correctly", () => {
         expect(typeDefs.definitions[0].fields[0].name.value).toEqual("getSearchAuditLog");
         expect(typeDefs.definitions[0].fields[0].type.kind).toEqual("ListType");
@@ -33,21 +33,25 @@ describe("schema.js", () => {
         expect(typeDefs.definitions[0].fields[4].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[0].fields[4].type.name.value).toEqual("HDR_MetaData");
     });
+
     it("Should check that the hdrCatalogueLogin Query is defined correctly", () => {
         expect(typeDefs.definitions[0].fields[5].name.value).toEqual("hdrCatalogueLogin");
         expect(typeDefs.definitions[0].fields[5].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[0].fields[5].type.name.value).toEqual("HDR_CatalogueLogin");
     });
+
     it("Should check that the hdrCatalogueLogout Query is defined correctly", () => {
         expect(typeDefs.definitions[0].fields[6].name.value).toEqual("hdrCatalogueLogout");
         expect(typeDefs.definitions[0].fields[6].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[0].fields[6].type.name.value).toEqual("HDR_CatalogueLogout");
     });
+
     it("Should check that the hdrCatalogueItemsSearch Query is defined correctly", () => {
         expect(typeDefs.definitions[0].fields[7].name.value).toEqual("hdrCatalogueItemsSearch");
         expect(typeDefs.definitions[0].fields[7].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[0].fields[7].type.name.value).toEqual("HDR_MetaData");
     });
+
     it("Should check the hdrCatalogueItemsSearch input parameters", () => {
         expect(typeDefs.definitions[0].fields[7].arguments.length).toEqual(3);
         expect(typeDefs.definitions[0].fields[7].arguments[0].name.value).toEqual("searchTerm");
@@ -66,11 +70,13 @@ describe("schema.js", () => {
         expect(typeDefs.definitions[1].name.value).toEqual("Mutation");
         expect(typeDefs.definitions[1].fields.length).toEqual(1);
     });
+
     it("Should check that the searchSave Mutation is defined correctly", () => {
         expect(typeDefs.definitions[1].fields[0].name.value).toEqual("searchSave");
         expect(typeDefs.definitions[1].fields[0].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[1].fields[0].type.name.value).toEqual("SearchSaveResult");
     });
+
     it("Should check the searchSave input parameters", () => {
         const i = 1;
         const inputs = typeDefs.definitions[i].fields[0].arguments;
@@ -103,6 +109,46 @@ describe("schema.js", () => {
         expect(inputs[6].type.kind).toEqual("NonNullType");
         expect(inputs[6].type.type.name.value).toEqual("Sort");
     });
+});
+
+describe("Check that the correct inputs are included and defined", () => {
+    beforeEach(() => {});
+
+    it("Should check that the Filter input is defined correctly", () => {
+        const i = 2;
+        expect(typeDefs.definitions[i].kind).toEqual("InputObjectTypeDefinition");
+        expect(typeDefs.definitions[i].name.value).toEqual("Filter");
+        expect(typeDefs.definitions[i].fields).toHaveLength(2);
+
+        // The field definitions
+        expect(typeDefs.definitions[i].fields[0].name.value).toEqual("type");
+        expect(typeDefs.definitions[i].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[0].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("value");
+        expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
+    });
+
+    it("Should check that the Sort input is defined correctly", () => {
+        const i = 3;
+        expect(typeDefs.definitions[i].kind).toEqual("InputObjectTypeDefinition");
+        expect(typeDefs.definitions[i].name.value).toEqual("Sort");
+        expect(typeDefs.definitions[i].fields).toHaveLength(2);
+
+        // The field definitions
+        expect(typeDefs.definitions[i].fields[0].name.value).toEqual("applied");
+        expect(typeDefs.definitions[i].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[0].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("value");
+        expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
+    });
+});
+
+describe("The DB Search is configured correctly", () => {
+    beforeEach(() => {});
 
     it("Should test the getSearchAuditLog Field Definition", () => {
         const i = 4;
@@ -144,9 +190,119 @@ describe("schema.js", () => {
         expect(typeDefs.definitions[i].fields[7].type.name.value).toEqual("String");
     });
 
-    // TODO: Tests for items 5,6,7,8 (SearchFilters, SearchSaved, SearchSort, SearchSaveResult)
+    it("Should test the getSearchFilters Field Definition", () => {
+        const i = 5;
+        expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
+        expect(typeDefs.definitions[i].name.value).toEqual("SearchFilters");
+        expect(typeDefs.definitions[i].fields).toHaveLength(6);
 
-    it("Should test the hdrNoSearch Field Definition", () => {
+        // The field definitions
+        expect(typeDefs.definitions[i].fields[0].name.value).toEqual("searchfilters_id");
+        expect(typeDefs.definitions[i].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[0].type.name.value).toEqual("ID");
+
+        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("searchfilters_value");
+        expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[2].name.value).toEqual("searchfilters_type");
+        expect(typeDefs.definitions[i].fields[2].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[2].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("searchfilters_searchaudit_id");
+        expect(typeDefs.definitions[i].fields[3].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[3].type.name.value).toEqual("ID");
+
+        expect(typeDefs.definitions[i].fields[4].name.value).toEqual("searchfilters_created_on");
+        expect(typeDefs.definitions[i].fields[4].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[4].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[5].name.value).toEqual("searchfilters_updated_on");
+        expect(typeDefs.definitions[i].fields[5].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[5].type.name.value).toEqual("String");
+    });
+
+    it("Should test the getSearchSaved Field Definition", () => {
+        const i = 6;
+        expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
+        expect(typeDefs.definitions[i].name.value).toEqual("SearchSaved");
+        expect(typeDefs.definitions[i].fields).toHaveLength(5);
+
+        // The field definitions
+        expect(typeDefs.definitions[i].fields[0].name.value).toEqual("searchsaved_id");
+        expect(typeDefs.definitions[i].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[0].type.name.value).toEqual("ID");
+
+        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("searchsaved_user_id");
+        expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[2].name.value).toEqual("searchsaved_searchaudit_id");
+        expect(typeDefs.definitions[i].fields[2].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[2].type.name.value).toEqual("ID");
+
+        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("searchsaved_created_on");
+        expect(typeDefs.definitions[i].fields[3].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[3].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[4].name.value).toEqual("searchsaved_updated_on");
+        expect(typeDefs.definitions[i].fields[4].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[4].type.name.value).toEqual("String");
+    });
+
+    it("Should test the getSearchSort Field Definition", () => {
+        const i = 7;
+        expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
+        expect(typeDefs.definitions[i].name.value).toEqual("SearchSort");
+        expect(typeDefs.definitions[i].fields).toHaveLength(6);
+
+        // The field definitions
+        expect(typeDefs.definitions[i].fields[0].name.value).toEqual("searchsort_id");
+        expect(typeDefs.definitions[i].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[0].type.name.value).toEqual("ID");
+
+        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("searchsort_applied");
+        expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[2].name.value).toEqual("searchsort_value");
+        expect(typeDefs.definitions[i].fields[2].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[2].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("searchsort_searchaudit_id");
+        expect(typeDefs.definitions[i].fields[3].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[3].type.name.value).toEqual("ID");
+
+        expect(typeDefs.definitions[i].fields[4].name.value).toEqual("searchsort_created_on");
+        expect(typeDefs.definitions[i].fields[4].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[4].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[5].name.value).toEqual("searchsort_updated_on");
+        expect(typeDefs.definitions[i].fields[5].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[5].type.name.value).toEqual("String");
+    });
+
+    it("Should test the SearchSaveResult defintition", () => {
+        const i = 8;
+        expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
+        expect(typeDefs.definitions[i].name.value).toEqual("SearchSaveResult");
+        expect(typeDefs.definitions[i].fields).toHaveLength(2);
+
+        // The field definitions
+        expect(typeDefs.definitions[i].fields[0].name.value).toEqual("status");
+        expect(typeDefs.definitions[i].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[0].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("message");
+        expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
+    });
+});
+
+describe("The Metdata Catalogue API's are configured correctly", () => {
+    beforeEach(() => {});
+
+    it("Should test the HDR_MetaData Field Definition", () => {
         const i = 9;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("HDR_MetaData");
@@ -169,7 +325,8 @@ describe("schema.js", () => {
         expect(typeDefs.definitions[i].fields[3].type.kind).toEqual("ListType");
         expect(typeDefs.definitions[i].fields[3].type.type.name.value).toEqual("HDR_MetaData_Result");
     });
-    it("Should test the HDR_MetaData Field Definition", () => {
+
+    it("Should test the HDR_MetaData_Result Field Definition", () => {
         const i = 10;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("HDR_MetaData_Result");
@@ -228,6 +385,7 @@ describe("schema.js", () => {
         expect(typeDefs.definitions[i].fields[12].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[12].type.name.value).toEqual("String");
     });
+
     it("Should test the HDR_MetaData_Result HDR_Classifier_Record Field Definition", () => {
         const i = 11;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
@@ -247,6 +405,7 @@ describe("schema.js", () => {
         expect(typeDefs.definitions[i].fields[2].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[2].type.name.value).toEqual("String");
     });
+
     it("Should test the HDR_CatalogueLogin Field Definition", () => {
         const i = 12;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
@@ -266,6 +425,7 @@ describe("schema.js", () => {
         expect(typeDefs.definitions[i].fields[2].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[2].type.name.value).toEqual("HDR_Login_Result");
     });
+
     it("Should test the HDR_Login_Result Field Definition", () => {
         const i = 13;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
@@ -297,6 +457,7 @@ describe("schema.js", () => {
         expect(typeDefs.definitions[i].fields[5].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[5].type.name.value).toEqual("Boolean");
     });
+
     it("Should test the HDR_CatalogueLogout Field Definition", () => {
         const i = 14;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
