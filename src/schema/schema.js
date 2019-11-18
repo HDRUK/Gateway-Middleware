@@ -7,6 +7,7 @@ const typeDefs = gql`
         getSearchSaved: [SearchSaved]
         getSearchSort: [SearchSort]
         hdrDataModelSearch: HDR_MetaData
+        hdrDataModelID(ID: String!): HDR_MetaData_ID
         hdrCatalogueLogin: HDR_CatalogueLogin
         hdrCatalogueLogout: HDR_CatalogueLogout
         hdrCatalogueItemsSearch(searchTerm: String, recordOffset: Int!, recordLimit: Int!): HDR_MetaData
@@ -49,6 +50,12 @@ const typeDefs = gql`
         message: String
         count: String
         data: [HDR_MetaData_Result]
+    }
+    type HDR_MetaData_ID {
+        status: String
+        message: String
+        count: String
+        data: HDR_MetaData_Result
     }
     type HDR_MetaData_Result {
         id: String
