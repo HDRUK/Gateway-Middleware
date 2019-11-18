@@ -5,7 +5,7 @@ describe("Check that the correct resolvers are included and defined", () => {
 
     it("should test that the Queries are all defined", () => {
         expect(typeDefs.definitions[0].name.value).toEqual("Query");
-        expect(typeDefs.definitions[0].fields.length).toEqual(8);
+        expect(typeDefs.definitions[0].fields.length).toEqual(9);
     });
 
     it("Should check that the getSearchAuditLog Query is defined correctly", () => {
@@ -33,37 +33,42 @@ describe("Check that the correct resolvers are included and defined", () => {
         expect(typeDefs.definitions[0].fields[4].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[0].fields[4].type.name.value).toEqual("HDR_MetaData");
     });
+    it("Should check that the hdrDataModelID Query is defined correctly", () => {
+        expect(typeDefs.definitions[0].fields[5].name.value).toEqual("hdrDataModelID");
+        expect(typeDefs.definitions[0].fields[5].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[0].fields[5].type.name.value).toEqual("HDR_MetaData_ID");
+    });
 
     it("Should check that the hdrCatalogueLogin Query is defined correctly", () => {
-        expect(typeDefs.definitions[0].fields[5].name.value).toEqual("hdrCatalogueLogin");
-        expect(typeDefs.definitions[0].fields[5].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[0].fields[5].type.name.value).toEqual("HDR_CatalogueLogin");
+        expect(typeDefs.definitions[0].fields[6].name.value).toEqual("hdrCatalogueLogin");
+        expect(typeDefs.definitions[0].fields[6].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[0].fields[6].type.name.value).toEqual("HDR_CatalogueLogin");
     });
 
     it("Should check that the hdrCatalogueLogout Query is defined correctly", () => {
-        expect(typeDefs.definitions[0].fields[6].name.value).toEqual("hdrCatalogueLogout");
-        expect(typeDefs.definitions[0].fields[6].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[0].fields[6].type.name.value).toEqual("HDR_CatalogueLogout");
+        expect(typeDefs.definitions[0].fields[7].name.value).toEqual("hdrCatalogueLogout");
+        expect(typeDefs.definitions[0].fields[7].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[0].fields[7].type.name.value).toEqual("HDR_CatalogueLogout");
     });
 
     it("Should check that the hdrCatalogueItemsSearch Query is defined correctly", () => {
-        expect(typeDefs.definitions[0].fields[7].name.value).toEqual("hdrCatalogueItemsSearch");
-        expect(typeDefs.definitions[0].fields[7].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[0].fields[7].type.name.value).toEqual("HDR_MetaData");
+        expect(typeDefs.definitions[0].fields[8].name.value).toEqual("hdrCatalogueItemsSearch");
+        expect(typeDefs.definitions[0].fields[8].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[0].fields[8].type.name.value).toEqual("HDR_MetaData");
     });
 
     it("Should check the hdrCatalogueItemsSearch input parameters", () => {
-        expect(typeDefs.definitions[0].fields[7].arguments.length).toEqual(3);
-        expect(typeDefs.definitions[0].fields[7].arguments[0].name.value).toEqual("searchTerm");
-        expect(typeDefs.definitions[0].fields[7].arguments[0].type.name.value).toEqual("String");
+        expect(typeDefs.definitions[0].fields[8].arguments.length).toEqual(3);
+        expect(typeDefs.definitions[0].fields[8].arguments[0].name.value).toEqual("searchTerm");
+        expect(typeDefs.definitions[0].fields[8].arguments[0].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[0].fields[7].arguments[1].name.value).toEqual("recordOffset");
-        expect(typeDefs.definitions[0].fields[7].arguments[1].type.kind).toEqual("NonNullType");
-        expect(typeDefs.definitions[0].fields[7].arguments[1].type.type.name.value).toEqual("Int");
+        expect(typeDefs.definitions[0].fields[8].arguments[1].name.value).toEqual("recordOffset");
+        expect(typeDefs.definitions[0].fields[8].arguments[1].type.kind).toEqual("NonNullType");
+        expect(typeDefs.definitions[0].fields[8].arguments[1].type.type.name.value).toEqual("Int");
 
-        expect(typeDefs.definitions[0].fields[7].arguments[2].name.value).toEqual("recordLimit");
-        expect(typeDefs.definitions[0].fields[7].arguments[2].type.kind).toEqual("NonNullType");
-        expect(typeDefs.definitions[0].fields[7].arguments[2].type.type.name.value).toEqual("Int");
+        expect(typeDefs.definitions[0].fields[8].arguments[2].name.value).toEqual("recordLimit");
+        expect(typeDefs.definitions[0].fields[8].arguments[2].type.kind).toEqual("NonNullType");
+        expect(typeDefs.definitions[0].fields[8].arguments[2].type.type.name.value).toEqual("Int");
     });
 
     it("Should test that the Mutations are all defined", () => {
@@ -326,8 +331,32 @@ describe("The Metdata Catalogue API's are configured correctly", () => {
         expect(typeDefs.definitions[i].fields[3].type.type.name.value).toEqual("HDR_MetaData_Result");
     });
 
-    it("Should test the HDR_MetaData_Result Field Definition", () => {
+    it("Should test the HDR_MetaData_ID Field Definition", () => {
         const i = 10;
+        expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
+        expect(typeDefs.definitions[i].name.value).toEqual("HDR_MetaData_ID");
+        expect(typeDefs.definitions[i].fields).toHaveLength(4);
+
+        // The field definitions
+        expect(typeDefs.definitions[i].fields[0].name.value).toEqual("status");
+        expect(typeDefs.definitions[i].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[0].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("message");
+        expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[2].name.value).toEqual("count");
+        expect(typeDefs.definitions[i].fields[2].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[2].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("data");
+        expect(typeDefs.definitions[i].fields[3].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[3].type.name.value).toEqual("HDR_MetaData_Result");
+    });
+
+    it("Should test the HDR_MetaData_Result Field Definition", () => {
+        const i = 11;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("HDR_MetaData_Result");
         expect(typeDefs.definitions[i].fields).toHaveLength(13);
@@ -387,7 +416,7 @@ describe("The Metdata Catalogue API's are configured correctly", () => {
     });
 
     it("Should test the HDR_MetaData_Result HDR_Classifier_Record Field Definition", () => {
-        const i = 11;
+        const i = 12;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("HDR_Classifier_Record");
         expect(typeDefs.definitions[i].fields).toHaveLength(3);
@@ -407,7 +436,7 @@ describe("The Metdata Catalogue API's are configured correctly", () => {
     });
 
     it("Should test the HDR_CatalogueLogin Field Definition", () => {
-        const i = 12;
+        const i = 13;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("HDR_CatalogueLogin");
         expect(typeDefs.definitions[i].fields).toHaveLength(3);
@@ -427,7 +456,7 @@ describe("The Metdata Catalogue API's are configured correctly", () => {
     });
 
     it("Should test the HDR_Login_Result Field Definition", () => {
-        const i = 13;
+        const i = 14;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("HDR_Login_Result");
         expect(typeDefs.definitions[i].fields).toHaveLength(6);
@@ -459,7 +488,7 @@ describe("The Metdata Catalogue API's are configured correctly", () => {
     });
 
     it("Should test the HDR_CatalogueLogout Field Definition", () => {
-        const i = 14;
+        const i = 15;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("HDR_CatalogueLogout");
         expect(typeDefs.definitions[i].fields).toHaveLength(1);
