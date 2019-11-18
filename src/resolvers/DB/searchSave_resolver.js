@@ -1,18 +1,46 @@
 const dbConnect = require("../../db/db");
 
-const queryString = userId => `INSERT INTO searchsaved (searchsaved_user_id) VALUES ('${userId}')`;
+const searchAuditLogQueryString = (userId, searchTerm, endPoint, offSet, recordLimit) => `
+    INSERT INTO searchaudit_log (searchaudit_user_id, searchaudit_detail, searchaudit_end_point, searchaudit_record_offset, searchaudit_record_limit)
+    VALUES ('${userId}', '${searchTerm}', '${endPoint}', '${offSet}', '${recordLimit}')
+    RETURNING searchaudit_id`;
+
+const filterValuesString = (searchAuditId, value, type) => `('${searchAuditId}', '${value}', '${type}')`;
+
+const searchFilterQueryString = (searchAuditId, filters) => `
+    INSERT INTO searchfilters (searchfilters_searchaudit_id, searchfilters_value, searchfilters_type)
+    VALUES ${filters.map(filter => filterValuesString(searchAuditId, filter.value, filter.type)).join(", ")}`;
+
+const searchSortQueryString = (searchAuditId, applied, value) => `
+    INSERT INTO searchsort (searchsort_searchaudit_id, searchsort_applied, searchsort_value)
+    VALUES ('${searchAuditId}', '${applied}', '${value}')`;
+
+const searchSavedQueryString = (searchAuditId, userId) => `
+    INSERT INTO searchsaved (searchsaved_searchaudit_id, searchsaved_user_id)
+    VALUES ('${searchAuditId}', '${userId}')`;
 
 module.exports = {
     Mutation: {
-        searchSave: async (_, { userId }) => {
+        searchSave: async (_, { userId, searchTerm, endPoint, offSet, recordLimit, filters, sort }) => {
             try {
-                console.log("helllo", userId);
-                const modifiedQueryString = queryString(userId);
-                const result = await dbConnect.query(modifiedQueryString);
-                console.log("result", result);
+                const searchAuditLogSQL = searchAuditLogQueryString(userId, searchTerm, endPoint, offSet, recordLimit);
+                const searchAudit = await dbConnect.query(searchAuditLogSQL);
+                const searchAuditId = searchAudit.rows[0].searchaudit_id;
+
+                if (filters && filters.length > 0) {
+                    const searchFilterSQL = searchFilterQueryString(searchAuditId, filters);
+                    await dbConnect.query(searchFilterSQL);
+                }
+
+                const searchSortSQL = searchSortQueryString(searchAuditId, sort.applied, sort.value);
+                await dbConnect.query(searchSortSQL);
+
+                const searchSavedSQL = searchSavedQueryString(searchAuditId, userId);
+                await dbConnect.query(searchSavedSQL);
+
                 return {
                     status: 200,
-                    message: "Test"
+                    message: "Search saved successfully"
                 };
             } catch (err) {
                 throw new Error(`Database save search ERROR -  ${err}`);

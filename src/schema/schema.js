@@ -11,9 +11,28 @@ const typeDefs = gql`
         hdrCatalogueLogout: HDR_CatalogueLogout
         hdrCatalogueItemsSearch(searchTerm: String, recordOffset: Int!, recordLimit: Int!): HDR_MetaData
     }
+
     type Mutation {
-        searchSave(userId: String!): SearchSaveResult
+        searchSave(
+            userId: String!
+            searchTerm: String!
+            endPoint: String!
+            offSet: Int!
+            recordLimit: Int!
+            filters: [Filter]
+            sort: Sort
+        ): SearchSaveResult
     }
+
+    input Filter {
+        type: String
+        value: String
+    }
+    input Sort {
+        applied: String
+        value: String
+    }
+
     type SearchAudit_log {
         searchaudit_id: ID
         searchaudit_user_id: String
@@ -24,6 +43,7 @@ const typeDefs = gql`
         searchaudit_created_on: String
         searchaudit_updated_on: String
     }
+
     type SearchFilters {
         searchfilters_id: ID
         searchfilters_value: String
@@ -82,7 +102,6 @@ const typeDefs = gql`
         url: String
         result: HDR_Login_Result
     }
-
     type HDR_Login_Result {
         id: ID
         emailAddress: String
