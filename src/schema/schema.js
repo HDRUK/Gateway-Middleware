@@ -20,7 +20,7 @@ const typeDefs = gql`
             offSet: Int!
             recordLimit: Int!
             filters: [Filter]
-            sort: Sort
+            sort: Sort!
         ): SearchSaveResult
     }
 
