@@ -11,7 +11,6 @@ module.exports = {
                 }
             })
                 .then(res => {
-                    console.log("DATA ", res);
                     const status = res.status;
                     const message = res.statusText;
 
