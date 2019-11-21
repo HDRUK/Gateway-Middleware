@@ -46,15 +46,11 @@ phases:
       - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
       - echo updating kubeconfig...
       - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $EKS_CLUSTER_NAME 
-      - echo create namespace only run once...
-      - kubectl create namespace $NAMESPACE
-      - echo getting deployments...
-      - kubectl describe deployments --namespace=$NAMESPACE
 
   build:
     commands:
       - echo running run command run below ony once...
-      - kubectl run $APPNAME --image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --port=$APPPORT --namespace=$NAMESPACE
+      - kubectl run $APP_NAME --image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --port=$APP_PORT --namespace=$NAMESPACE
       - echo updating deployment...
       - kubectl set image deployments/$APP_NAME $APP_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --namespace=$NAMESPACE
      
