@@ -22,7 +22,6 @@ phases:
       - echo Build started on `date` 
       - echo Building the Docker image...           
       - docker build \
-        -t $IMAGE_REPO_NAME:$IMAGE_TAG \
         --build-arg database=${DATABASE} \
         --build-arg dbuser=${DATABASE_USER} \
         --build-arg dbpassword=${DATABASE_PASSWORD} \
@@ -36,7 +35,8 @@ phases:
         --build-arg apisearch=${API_SEARCH} \
         --build-arg datamodels=${API_ALL_DATAMODELS} \
         --build-arg domaintypes=${API_DOMAINTYPES} \
-        --build-arg datamodeltypes=${API_DATAMODELTYPES} . 
+        --build-arg datamodeltypes=${API_DATAMODELTYPES} \
+        -t $IMAGE_REPO_NAME:$IMAGE_TAG . 
        
   post_build: 
     commands: 
