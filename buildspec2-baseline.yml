@@ -1,0 +1,75 @@
+---
+version: 0.2
+
+env:
+  variables:
+    CONFIG: | 
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: middleware
+            namespace: hdrdev
+          spec:
+            type: LoadBalancer
+            ports:
+              - port: 443
+                targetPort: 5001
+                protocol: TCP
+            selector:
+              app: middleware
+            externalTrafficPolicy: Local
+
+phases:
+  install:
+    commands:
+      - echo installing required packages for EKS setup...
+      - curl -sS -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-07-26/bin/linux/amd64/aws-iam-authenticator
+      - curl -o aws-auth-cm.yaml https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2019-11-15/aws-auth-cm.yaml
+      - curl -sS -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-07-26/bin/linux/amd64/kubectl
+      - chmod +x ./kubectl ./aws-iam-authenticator
+      - export PATH=$PWD/:$PATH
+      - apt-get update && apt-get -y install jq python3-pip python3-dev && pip3 install --upgrade awscli
+      - export KUBECONFIG=$HOME/.kube/config
+     
+    runtime-versions: 
+      docker: 18 
+      nodejs: 8 
+ 
+
+  pre_build:
+    commands:
+      - echo creating temporary credentials...
+      - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
+      - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
+      - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
+      - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
+      - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
+      - echo updating kubeconfig...
+      - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $EKS_CLUSTER_NAME 
+      - echo create namespace only run once...
+      - kubectl create namespace $NAMESPACE
+      - echo getting deployments...
+      - kubectl describe deployments --namespace=$NAMESPACE
+
+  build:
+    commands:
+      - echo running run command run below ony once...
+      - kubectl run $APPNAME --image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --port=$APPPORT --namespace=$NAMESPACE
+      - echo updating deployment...
+      - kubectl set image deployments/$APP_NAME $APP_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --namespace=$NAMESPACE
+     
+  post_build:
+    commands:
+      - echo creating configs file...
+      - touch configs.yml
+      - echo "$CONFIG">>configs.yml
+      - echo exposing deployment to load balancer...
+      - kubectl apply -f configs.yml --validate=false
+      - echo retrieving pods in eks cluster...
+      - kubectl get pods --namespace=$NAMESPACE
+      - echo getting external ips from cluster...
+      - kubectl get services -o wide --namespace=$NAMESPACE
+      
+      #uncomment BELOW to rollback to previous deployment version
+      #- echo rollback to previous deployment version...
+      #- kubectl rollout undo deployments/$APP_NAME
