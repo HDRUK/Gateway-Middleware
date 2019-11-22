@@ -34,13 +34,13 @@ describe("Check that the Search Schema is defined", () => {
 
     it("Should test that the Mutations are all defined", () => {
         expect(typeDefs.definitions[1].name.value).toEqual("Mutation");
-        expect(typeDefs.definitions[1].fields.length).toEqual(1);
+        expect(typeDefs.definitions[1].fields.length).toEqual(2);
     });
 
     it("Should check that the searchSave Mutation is defined correctly", () => {
         expect(typeDefs.definitions[1].fields[0].name.value).toEqual("searchSave");
         expect(typeDefs.definitions[1].fields[0].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[1].fields[0].type.name.value).toEqual("SearchSaveResult");
+        expect(typeDefs.definitions[1].fields[0].type.name.value).toEqual("GenericQueryResult");
     });
 
     it("Should check the searchSave input parameters", () => {
@@ -76,10 +76,24 @@ describe("Check that the Search Schema is defined", () => {
         expect(inputs[6].type.type.name.value).toEqual("Sort");
     });
 
-    it("Should test the SearchSaveResult defintition", () => {
+    it("Should check that the searchDelete Mutation is defined correctly", () => {
+        expect(typeDefs.definitions[1].fields[1].name.value).toEqual("searchDelete");
+        expect(typeDefs.definitions[1].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[1].fields[1].type.name.value).toEqual("GenericQueryResult");
+    });
+
+    it("Should check the searchDelete input parameters", () => {
+        const inputs = typeDefs.definitions[1].fields[1].arguments;
+        expect(inputs.length).toEqual(1);
+        expect(inputs[0].name.value).toEqual("searchSavedId");
+        expect(inputs[0].type.kind).toEqual("NonNullType");
+        expect(inputs[0].type.type.name.value).toEqual("String");
+    });
+
+    it("Should test the GenericQueryResult defintition", () => {
         const i = 8;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
-        expect(typeDefs.definitions[i].name.value).toEqual("SearchSaveResult");
+        expect(typeDefs.definitions[i].name.value).toEqual("GenericQueryResult");
         expect(typeDefs.definitions[i].fields).toHaveLength(2);
 
         // The field definitions
