@@ -3,30 +3,11 @@ version: 0.2
 
 env:
   variables:
-    CONFIGS: | 
-         apiVersion: v1 
-         kind: Service 
-         metadata: 
-           name: middleware 
-           namespace: hdrdev 
-           labels: 
-             app: middleware 
-         spec: 
-           externalTrafficPolicy: Local 
-           ports: 
-           - name: http 
-             port: 80 
-             protocol: TCP 
-             targetPort: 5001
-           selector: 
-             app: middleware 
-           type: LoadBalancer 
-          
     CONFIG: | 
           apiVersion: v1
           kind: Service
           metadata:
-            name: middleware
+            name: middleware-service
             namespace: hdrdev
           spec:
             type: LoadBalancer
@@ -80,7 +61,7 @@ phases:
       #uncomment the 5 lines BELOW this if CONGIG in variables above change
       - echo creating configs file...
       - touch configs.yml
-      - echo "$CONFIGS">>configs.yml
+      - echo "$CONFIG">>configs.yml
       - echo exposing deployment to load balancer...
       - kubectl apply -f configs.yml --validate=false
       - echo retrieving pods in eks cluster...
