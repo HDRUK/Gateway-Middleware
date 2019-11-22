@@ -12,7 +12,7 @@ env:
           spec:
             type: LoadBalancer
             ports:
-              - port: 443
+              - port: 80
                 targetPort: 5001
                 protocol: TCP
             selector:
