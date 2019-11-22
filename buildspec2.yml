@@ -12,9 +12,9 @@ env:
           spec: 
             type: LoadBalancer 
             ports: 
-              - port: 80 
-                targetPort: 5001 
-                protocol: TCP 
+            - port: 80 
+              targetPort: 5001 
+              protocol: TCP 
             selector: 
               app: middleware-pod
             externalTrafficPolicy: Local 
@@ -29,18 +29,18 @@ env:
           spec:
             selector:
               matchLabels:
-              app: middleware-pod
+                app: middleware-pod
             template:
               metadata:
-              labels: 
+                labels: 
                   app: middleware-pod
               spec:
                 containers:
-                    - name: middleware
-                      image: 148375436316.dkr.ecr.eu-west-2.amazonaws.com/hdr-gateway-middleware:latest
-                      imagePullPolicy: IfNotPresent
-                      ports:
-                        - containerPort: 5001
+                - name: middleware
+                  image: 148375436316.dkr.ecr.eu-west-2.amazonaws.com/hdr-gateway-middleware:latest
+                  imagePullPolicy: IfNotPresent
+                  ports:
+                  - containerPort: 5001
     CONFIG: | 
           apiVersion: v1
           kind: Service
