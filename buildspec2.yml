@@ -16,7 +16,7 @@ env:
                 targetPort: 5001
                 protocol: TCP
             selector:
-              app: middleware
+              run: middleware
             externalTrafficPolicy: Local
                       
 phases:
