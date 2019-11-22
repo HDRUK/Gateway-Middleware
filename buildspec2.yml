@@ -3,6 +3,44 @@ version: 0.2
 
 env:
   variables:
+    SERVICE: |
+          apiVersion: v1 
+          kind: Service 
+          metadata: 
+            name: middleware-service 
+            namespace: hdrdev 
+          spec: 
+            type: LoadBalancer 
+            ports: 
+              - port: 80 
+                targetPort: 5001 
+                protocol: TCP 
+            selector: 
+              app: middleware-pod
+            externalTrafficPolicy: Local 
+
+
+    DEPLOY: |
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: middleware-deployment
+            namespace: hdrdev
+          spec:
+            selector:
+              matchLabels:
+              app: middleware-pod
+            template:
+              metadata:
+              labels: 
+                  app: middleware-pod
+              spec:
+                containers:
+                    - name: middleware
+                      image: 148375436316.dkr.ecr.eu-west-2.amazonaws.com/hdr-gateway-middleware:latest
+                      imagePullPolicy: IfNotPresent
+                      ports:
+                        - containerPort: 5001
     CONFIG: | 
           apiVersion: v1
           kind: Service
@@ -52,18 +90,23 @@ phases:
   build:
     commands:
       - echo updating deployment...
-      - kubectl delete deployment.apps/middleware service/middleware --namespace=$NAMESPACE
-      - kubectl run $APP_NAME --image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --port=$APP_PORT --namespace=$NAMESPACE 
-      - kubectl set image deployments/$APP_NAME $APP_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --namespace=$NAMESPACE
+      #- kubectl delete deployment.apps/middleware service/middleware --namespace=$NAMESPACE
+      #- kubectl run $APP_NAME --image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --port=$APP_PORT --namespace=$NAMESPACE 
+      #- kubectl set image deployments/$APP_NAME $APP_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --namespace=$NAMESPACE
      
   post_build:
     commands:
       #uncomment the 5 lines BELOW this if CONGIG in variables above change
-      - echo creating configs file...
-      - touch configs.yml
-      - echo "$CONFIG">>configs.yml
+      - echo creating deploy file...
+      - touch deploy.yml
+      - echo "$DEPLOY">>deploy.yml
       - echo exposing deployment to load balancer...
-      - kubectl apply -f configs.yml --validate=false
+      - kubectl apply -f deploy.yml --validate=false
+      - echo creating service file...
+      - touch service.yml
+      - echo "$SERVICE">>service.yml
+      - echo exposing deployment to load balancer...
+      - kubectl apply -f service.yml --validate=false
       - echo retrieving pods in eks cluster...
       - kubectl get pods --namespace=$NAMESPACE
       - echo getting external ips from cluster...
