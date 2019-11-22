@@ -1,4 +1,4 @@
----
+--- 
 version: 0.2
 
 env:
@@ -41,7 +41,7 @@ env:
                   imagePullPolicy: IfNotPresent
                   ports:
                   - containerPort: 5001
-
+phases: 
   install:
     commands:
       - echo installing required packages for EKS setup...
