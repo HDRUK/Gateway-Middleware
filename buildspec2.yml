@@ -7,19 +7,19 @@ env:
          apiVersion: v1 
          kind: Service 
          metadata: 
-           name: authwebserver 
+           name: middleware 
            namespace: hdrdev 
            labels: 
-             app: authwebserver 
+             app: middleware 
          spec: 
            externalTrafficPolicy: Local 
            ports: 
            - name: http 
              port: 80 
              protocol: TCP 
-             targetPort: 5003 
+             targetPort: 5001
            selector: 
-             app: authwebserver 
+             app: middleware 
            type: LoadBalancer 
           
     CONFIG: | 
@@ -71,8 +71,8 @@ phases:
   build:
     commands:
       - echo updating deployment...
-      - kubectl delete deployment.apps/middleware service/middleware --namespace=$NAMESPACE
-      - kubectl run $APP_NAME --image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --port=$APP_PORT --namespace=$NAMESPACE 
+      #- kubectl delete deployment.apps/middleware service/middleware --namespace=$NAMESPACE
+      #- kubectl run $APP_NAME --image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --port=$APP_PORT --namespace=$NAMESPACE 
       - kubectl set image deployments/$APP_NAME $APP_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --namespace=$NAMESPACE
      
   post_build:
