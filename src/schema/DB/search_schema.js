@@ -17,7 +17,8 @@ module.exports = gql`
             recordLimit: Int!
             filters: [Filter]
             sort: Sort!
-        ): SearchSaveResult
+        ): GenericQueryResult
+        searchDelete(searchSavedId: String!): GenericQueryResult
     }
 
     input Filter {
@@ -62,7 +63,7 @@ module.exports = gql`
         searchsort_created_on: String
         searchsort_updated_on: String
     }
-    type SearchSaveResult {
+    type GenericQueryResult {
         status: String
         message: String
     }
