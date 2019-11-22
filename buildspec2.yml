@@ -3,6 +3,25 @@ version: 0.2
 
 env:
   variables:
+    CONFIGS: | 
+         apiVersion: v1 
+         kind: Service 
+         metadata: 
+           name: authwebserver 
+           namespace: hdrdev 
+           labels: 
+             app: authwebserver 
+         spec: 
+           externalTrafficPolicy: Local 
+           ports: 
+           - name: http 
+             port: 80 
+             protocol: TCP 
+             targetPort: 5003 
+           selector: 
+             app: authwebserver 
+           type: LoadBalancer 
+          
     CONFIG: | 
           apiVersion: v1
           kind: Service
@@ -59,10 +78,9 @@ phases:
   post_build:
     commands:
       #uncomment the 5 lines BELOW this if CONGIG in variables above change
-      - kubectl delete service/middleware
       - echo creating configs file...
       - touch configs.yml
-      - echo "$CONFIG">>configs.yml
+      - echo "$CONFIGS">>configs.yml
       - echo exposing deployment to load balancer...
       - kubectl apply -f configs.yml --validate=false
       - echo retrieving pods in eks cluster...
