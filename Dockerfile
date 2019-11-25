@@ -1,5 +1,5 @@
 FROM node:12 
-#WORKDIR /
+WORKDIR /
 
 # Install app dependencies 
 #COPY package.json ./ 
