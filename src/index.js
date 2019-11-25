@@ -21,6 +21,8 @@ const server = new ApolloServer({
 });
 
 server.listen(port).then(({ url }) => {
+    console.log("DB USER ", process.env.DATABASE_USER);
+    console.log("DB PATH ", process.env.PATH);
     logger.log({
         level: "info",
         message: `Server running on Port ${url}`
