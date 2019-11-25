@@ -1,8 +1,8 @@
 FROM node:12 
-WORKDIR /
+#WORKDIR /
 
 # Install app dependencies 
-COPY package.json ./ 
+#COPY package.json ./ 
 RUN npm install 
 
 # Copy app contents 
