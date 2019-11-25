@@ -1,9 +1,9 @@
 FROM node:12 
-#WORKDIR /src/index.js 
+WORKDIR /
 
 # Install app dependencies 
 COPY package.json ./ 
- 
+RUN npm install 
 
 # Copy app contents 
 COPY . . 
@@ -29,6 +29,6 @@ EXPOSE 5001
 #ENV API_DOMAINTYPES=${domaintypes} 
 #ENV API_DATAMODELTYPES=${datamodeltypes} 
 
-RUN npm install
+
 # Start the app 
 CMD [ "npm", "start"] 
