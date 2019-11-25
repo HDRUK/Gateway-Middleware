@@ -1,5 +1,5 @@
 FROM node:8 
-WORKDIR /src/index.js 
+#WORKDIR /src/index.js 
  
 # Install app dependencies 
 COPY package*.json ./ 
