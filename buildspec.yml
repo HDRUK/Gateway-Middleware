@@ -20,6 +20,8 @@ phases:
   build: 
     commands: 
       - echo Build started on `date` 
+      - echo getting database host...
+      - echo $DATABASE_HOST
       - echo Building the Docker image...           
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG --build-arg database=${DATABASE} --build-arg dbuser=${DATABASE_USER} --build-arg dbpassword=${DATABASE_PASSWORD} --build-arg dbhost=${DATABASE_HOST} --build-arg dbport=${DATABASE_PORT} --build-arg middlewareport=${PORT} --build-arg middlewareenv=${NODE_ENV} --build-arg apiurl=${API_BASE_URL} --build-arg apilogin=${API_LOGIN} --build-arg apilogout=${API_LOGOUT} --build-arg apisearch=${API_SEARCH} --build-arg datamodels=${API_ALL_DATAMODELS} --build-arg domaintypes=${API_DOMAINTYPES} --build-arg datamodeltypes=${API_DATAMODELTYPES} . 
        
