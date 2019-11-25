@@ -76,7 +76,7 @@ phases:
       - echo updating deployment...
       #- kubectl delete deployment.apps/middleware service/middleware --namespace=$NAMESPACE
       #- kubectl run $APP_NAME --image=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --port=$APP_PORT --namespace=$NAMESPACE 
-      - kubectl set image deployment.apps/middleware-deployment middleware-deployment=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --record --namespace=$NAMESPACE
+      - kubectl set image deployment.apps/middleware-deployment middleware=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --record --namespace=$NAMESPACE
      
   post_build:
     commands:
