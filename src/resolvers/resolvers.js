@@ -4,6 +4,7 @@ const searchFilters = require("./DB/searchFilters_resolver");
 const searchSort = require("./DB/searchSort_resolver");
 const searchSaved = require("./DB/searchSaved_resolver");
 const searchSave = require("./DB/searchSave_resolver");
+const searchSavedByUserId = require("./DB/searchSavedByUserId_resolver");
 
 // The API Resolvers
 const hdrCatalogueItemsSearch = require("./HDR/catalogueItems_search_resolver");
@@ -18,6 +19,7 @@ module.exports = [
     searchSort,
     searchSaved,
     searchSave,
+    searchSavedByUserId,
     hdrCatalogueItemsSearch,
     hdrCatalogueLogin,
     hdrCatalogueLogout,

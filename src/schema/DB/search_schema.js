@@ -6,6 +6,7 @@ module.exports = gql`
         getSearchFilters: [SearchFilters]
         getSearchSaved: [SearchSaved]
         getSearchSort: [SearchSort]
+        getSearchSavedByUserID(userId: String!): SearchSavedResult
     }
 
     extend type Mutation {
@@ -15,16 +16,16 @@ module.exports = gql`
             endPoint: String!
             offSet: Int!
             recordLimit: Int!
-            filters: [Filter]
-            sort: Sort!
+            filters: [FilterInput]
+            sort: SortInput!
         ): SearchSaveResult
     }
 
-    input Filter {
+    input FilterInput {
         type: String
         value: String
     }
-    input Sort {
+    input SortInput {
         applied: String
         value: String
     }
@@ -65,5 +66,28 @@ module.exports = gql`
     type SearchSaveResult {
         status: String
         message: String
+    }
+    type SearchSavedResult {
+        status: String
+        message: String
+        data: [SavedSearch]
+    }
+    type SavedSearch {
+        id: ID
+        detail: String
+        endPoint: String
+        recordOffset: Int
+        recordLimit: Int
+        createdOn: String
+        filters: [Filter]
+        sort: Sort
+    }
+    type Filter {
+        type: String
+        value: String
+    }
+    type Sort {
+        applied: String
+        value: String
     }
 `;
