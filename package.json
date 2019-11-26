@@ -22,6 +22,7 @@
         "apollo-server": "^2.9.6",
         "dotenv": "^8.2.0",
         "graphql": "^14.5.8",
+        "moment": "^2.24.0",
         "pg": "^7.12.1",
         "winston": "^3.2.1",
         "winston-daily-rotate-file": "^4.2.1"
