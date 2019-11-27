@@ -26,6 +26,7 @@ env:
               name: middleware-deployment
               namespace: hdrdev
             spec:
+              replicas: 2
               selector:
                 matchLabels:
                   app: middleware-pod
