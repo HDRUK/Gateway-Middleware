@@ -9,7 +9,7 @@ phases:
         #If you use the Ubuntu standard image 2.0 or later
         runtime-versions:
             docker: 18
-            nodejs: 12
+            nodejs: 10
 
     pre_build:
         commands:
