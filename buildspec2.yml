@@ -45,7 +45,7 @@ phases:
     install:
         commands:
             - echo installing required packages for EKS setup...
-            - WORKAROUND="{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"date\"}}}}}"
+            - WORKAROUND="{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"`date +'%s'`\"}}}}}"
             - curl -sS -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-07-26/bin/linux/amd64/aws-iam-authenticator
             - curl -o aws-auth-cm.yaml https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2019-11-15/aws-auth-cm.yaml
             - curl -sS -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/kubectl
