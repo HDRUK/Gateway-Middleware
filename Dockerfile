@@ -1,5 +1,5 @@
-FROM node:12  
-WORKDIR /src/index.js  
+FROM node:10  
+# WORKDIR /src/index.js  
 
 # Install app dependencies  
 COPY package*.json ./  
