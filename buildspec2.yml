@@ -88,7 +88,7 @@ phases:
             - echo "$SERVICE">>service.yml
             - echo exposing deployment to load balancer...
             - kubectl apply -f service.yml --validate=false
-            - kubectl get deployments
+            - kubectl get deployments --namespace=$NAMESPACE
             #- kubectl patch deployment middleware-pod -p "{"spec":{"template":{"metadata":{"annotations":{"date":"date +'%s'"}}}}}"
             - echo retrieving pods in eks cluster...
             - kubectl get pods --namespace=$NAMESPACE
