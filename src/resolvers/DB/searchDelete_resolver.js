@@ -16,7 +16,7 @@ module.exports = {
                     message: "Search deleted successfully"
                 };
             } catch (err) {
-                throw new Error(`Database save search ERROR -  ${err}`);
+                throw new Error(`Database delete search ERROR -  ${err}`);
             }
         }
     }
