@@ -2,7 +2,7 @@ FROM node:10
 # WORKDIR /src/index.js  
 
 # Install app dependencies  
-COPY package*.json ./  
+COPY package.json ./  
 RUN npm install  
 
 # Copy app contents  
