@@ -16,8 +16,8 @@ const searchSortQueryString = (searchAuditId, applied, value) => `
     VALUES ('${searchAuditId}', '${applied}', '${value}')`;
 
 const searchSavedQueryString = (searchAuditId, userId, name) => `
-    INSERT INTO searchsaved (searchsaved_searchaudit_id, searchsaved_user_id${name && ", searchsaved_name"})
-    VALUES ('${searchAuditId}', '${userId}'${name && `, '${name}'`})`;
+    INSERT INTO searchsaved (searchsaved_searchaudit_id, searchsaved_user_id${name ? ", searchsaved_name" : ""})
+    VALUES ('${searchAuditId}', '${userId}'${name ? `, '${name}'` : ""})`;
 
 module.exports = {
     Mutation: {
