@@ -10,6 +10,7 @@ const port = process.env.PORT;
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    cors: { origin: process.env.FRONTEND_APP, credentials: true },
     formatError: err => {
         if (err.originalError && err.originalError.error_message) {
             err.message = err.originalError.error_message;
