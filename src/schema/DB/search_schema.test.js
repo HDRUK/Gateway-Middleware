@@ -60,7 +60,7 @@ describe("Check that the Search Schema is defined", () => {
     it("Should check the searchSave input parameters", () => {
         const i = 1;
         const inputs = typeDefs.definitions[i].fields[0].arguments;
-        expect(inputs.length).toEqual(7);
+        expect(inputs.length).toEqual(8);
         expect(inputs[0].name.value).toEqual("userId");
         expect(inputs[0].type.kind).toEqual("NonNullType");
         expect(inputs[0].type.type.name.value).toEqual("String");
@@ -88,6 +88,10 @@ describe("Check that the Search Schema is defined", () => {
         expect(inputs[6].name.value).toEqual("sort");
         expect(inputs[6].type.kind).toEqual("NonNullType");
         expect(inputs[6].type.type.name.value).toEqual("SortInput");
+
+        expect(inputs[7].name.value).toEqual("name");
+        expect(inputs[7].type.kind).toEqual("NamedType");
+        expect(inputs[7].type.name.value).toEqual("String");
     });
 
     it("Should check that the searchDelete Mutation is defined correctly", () => {
@@ -236,7 +240,7 @@ describe("The DB Search is configured correctly", () => {
         const i = 6;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("SearchSaved");
-        expect(typeDefs.definitions[i].fields).toHaveLength(5);
+        expect(typeDefs.definitions[i].fields).toHaveLength(6);
 
         // The field definitions
         expect(typeDefs.definitions[i].fields[0].name.value).toEqual("searchsaved_id");
@@ -251,13 +255,17 @@ describe("The DB Search is configured correctly", () => {
         expect(typeDefs.definitions[i].fields[2].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[2].type.name.value).toEqual("ID");
 
-        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("searchsaved_created_on");
+        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("searchsaved_name");
         expect(typeDefs.definitions[i].fields[3].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[3].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[4].name.value).toEqual("searchsaved_updated_on");
+        expect(typeDefs.definitions[i].fields[4].name.value).toEqual("searchsaved_created_on");
         expect(typeDefs.definitions[i].fields[4].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[4].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[5].name.value).toEqual("searchsaved_updated_on");
+        expect(typeDefs.definitions[i].fields[5].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[5].type.name.value).toEqual("String");
     });
 
     it("Should test the getSearchSort Field Definition", () => {
@@ -336,7 +344,7 @@ describe("The results fields are configured correctly", () => {
         const i = 10;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("SavedSearch");
-        expect(typeDefs.definitions[i].fields).toHaveLength(8);
+        expect(typeDefs.definitions[i].fields).toHaveLength(9);
 
         // The field definitions
         expect(typeDefs.definitions[i].fields[0].name.value).toEqual("id");
@@ -363,13 +371,17 @@ describe("The results fields are configured correctly", () => {
         expect(typeDefs.definitions[i].fields[5].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[5].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[6].name.value).toEqual("filters");
-        expect(typeDefs.definitions[i].fields[6].type.kind).toEqual("ListType");
-        expect(typeDefs.definitions[i].fields[6].type.type.name.value).toEqual("Filter");
+        expect(typeDefs.definitions[i].fields[6].name.value).toEqual("name");
+        expect(typeDefs.definitions[i].fields[6].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[6].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[7].name.value).toEqual("sort");
-        expect(typeDefs.definitions[i].fields[7].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[i].fields[7].type.name.value).toEqual("Sort");
+        expect(typeDefs.definitions[i].fields[7].name.value).toEqual("filters");
+        expect(typeDefs.definitions[i].fields[7].type.kind).toEqual("ListType");
+        expect(typeDefs.definitions[i].fields[7].type.type.name.value).toEqual("Filter");
+
+        expect(typeDefs.definitions[i].fields[8].name.value).toEqual("sort");
+        expect(typeDefs.definitions[i].fields[8].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[8].type.name.value).toEqual("Sort");
     });
 
     it("Should test the Filter Field Definition", () => {
