@@ -10,9 +10,6 @@ const port = process.env.PORT;
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => {
-        console.log(req.headers.cookie);
-    },
     cors: { origin: process.env.FRONTEND_APP, credentials: true },
     formatError: err => {
         if (err.originalError && err.originalError.error_message) {
