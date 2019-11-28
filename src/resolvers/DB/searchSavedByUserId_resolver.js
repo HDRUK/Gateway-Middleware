@@ -2,7 +2,7 @@ const dbConnect = require("../../db/db");
 const moment = require("moment");
 
 const getSearchSavedQueryString = userId => `
-    SELECT searchsaved_id, searchsaved_searchaudit_id, searchsaved_created_on
+    SELECT searchsaved_id, searchsaved_searchaudit_id, searchsaved_created_on, searchsaved_name
     FROM searchsaved 
     WHERE searchsaved_user_id='${userId}'`;
 
@@ -70,6 +70,7 @@ module.exports = {
                             sort: sortObject
                         };
 
+                        search.searchsaved_name && (combinedResult.name = search.searchsaved_name);
                         filters && filters.length > 0 && (combinedResult.filters = filters);
 
                         return combinedResult;

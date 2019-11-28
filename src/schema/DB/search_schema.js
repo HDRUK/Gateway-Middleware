@@ -18,6 +18,7 @@ module.exports = gql`
             recordLimit: Int!
             filters: [FilterInput]
             sort: SortInput!
+            name: String
         ): GenericQueryResult
         searchDelete(searchSavedId: String!): GenericQueryResult
     }
@@ -53,6 +54,7 @@ module.exports = gql`
         searchsaved_id: ID
         searchsaved_user_id: String
         searchsaved_searchaudit_id: ID
+        searchsaved_name: String
         searchsaved_created_on: String
         searchsaved_updated_on: String
     }
@@ -80,6 +82,7 @@ module.exports = gql`
         recordOffset: Int
         recordLimit: Int
         createdOn: String
+        name: String
         filters: [Filter]
         sort: Sort
     }

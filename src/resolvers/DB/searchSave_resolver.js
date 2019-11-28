@@ -15,13 +15,13 @@ const searchSortQueryString = (searchAuditId, applied, value) => `
     INSERT INTO searchsort (searchsort_searchaudit_id, searchsort_applied, searchsort_value)
     VALUES ('${searchAuditId}', '${applied}', '${value}')`;
 
-const searchSavedQueryString = (searchAuditId, userId) => `
-    INSERT INTO searchsaved (searchsaved_searchaudit_id, searchsaved_user_id)
-    VALUES ('${searchAuditId}', '${userId}')`;
+const searchSavedQueryString = (searchAuditId, userId, name) => `
+    INSERT INTO searchsaved (searchsaved_searchaudit_id, searchsaved_user_id${name && ", searchsaved_name"})
+    VALUES ('${searchAuditId}', '${userId}'${name && `, '${name}'`})`;
 
 module.exports = {
     Mutation: {
-        searchSave: async (_, { userId, searchTerm, endPoint, offSet, recordLimit, filters, sort }) => {
+        searchSave: async (_, { userId, searchTerm, endPoint, offSet, recordLimit, filters, sort, name }) => {
             try {
                 const searchAuditLogSQL = searchAuditLogQueryString(userId, searchTerm, endPoint, offSet, recordLimit);
                 const searchAudit = await dbConnect.query(searchAuditLogSQL);
@@ -35,7 +35,7 @@ module.exports = {
                 const searchSortSQL = searchSortQueryString(searchAuditId, sort.applied, sort.value);
                 await dbConnect.query(searchSortSQL);
 
-                const searchSavedSQL = searchSavedQueryString(searchAuditId, userId);
+                const searchSavedSQL = searchSavedQueryString(searchAuditId, userId, name);
                 await dbConnect.query(searchSavedSQL);
 
                 return {
