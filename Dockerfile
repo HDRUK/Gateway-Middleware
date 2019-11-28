@@ -1,4 +1,4 @@
-FROM node:12.11.1  
+FROM node:10  
 # WORKDIR /src/index.js  
 
 # Install app dependencies  
