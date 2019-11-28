@@ -68,6 +68,6 @@ phases:
             - kubectl get pods --namespace=$NAMESPACE
             - echo getting external ips from cluster...
             - kubectl get services -o wide --namespace=$NAMESPACE
-            #uncomment BELOW to rollback to previous deployment version
+            #uncomment BELOW to rollback to the previous deployment version.
             #- echo rollback to previous deployment version...
             #- kubectl rollout undo deployments/$APP_NAME
