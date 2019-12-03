@@ -7,6 +7,7 @@ module.exports = gql`
         hdrCatalogueLogin: HDR_CatalogueLogin
         hdrCatalogueLogout: HDR_CatalogueLogout
         hdrCatalogueItemsSearch(searchTerm: String, recordOffset: Int!, recordLimit: Int!): HDR_MetaData
+        hdrFilterValues(filterValues: [String]): HDR_FilterData
     }
 
     type HDR_MetaData {
@@ -57,5 +58,14 @@ module.exports = gql`
     }
     type HDR_CatalogueLogout {
         status: String
+    }
+    type HDR_FilterData {
+        status: String
+        message: String
+        data: [HDR_FilterData_Values]
+    }
+    type HDR_FilterData_Values {
+        fieldName: String
+        fieldValues: [String]
     }
 `;

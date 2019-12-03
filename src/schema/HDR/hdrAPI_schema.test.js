@@ -5,7 +5,7 @@ describe("Check that the correct HDR API's defined", () => {
 
     it("should test that the Queries are all defined", () => {
         expect(typeDefs.definitions[0].name.value).toEqual("Query");
-        expect(typeDefs.definitions[0].fields.length).toEqual(5);
+        expect(typeDefs.definitions[0].fields.length).toEqual(6);
     });
 
     it("Should check that the hdrDataModelSearch Query is defined correctly", () => {
@@ -35,6 +35,12 @@ describe("Check that the correct HDR API's defined", () => {
         expect(typeDefs.definitions[0].fields[4].name.value).toEqual("hdrCatalogueItemsSearch");
         expect(typeDefs.definitions[0].fields[4].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[0].fields[4].type.name.value).toEqual("HDR_MetaData");
+    });
+
+    it("Should check that the hdrFilterValues Query is defined correctly", () => {
+        expect(typeDefs.definitions[0].fields[5].name.value).toEqual("hdrFilterValues");
+        expect(typeDefs.definitions[0].fields[5].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[0].fields[5].type.name.value).toEqual("HDR_FilterData");
     });
 });
 
@@ -224,5 +230,39 @@ describe("The Metdata Catalogue API's are configured correctly", () => {
         expect(typeDefs.definitions[7].fields[0].name.value).toEqual("status");
         expect(typeDefs.definitions[7].fields[0].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[7].fields[0].type.name.value).toEqual("String");
+    });
+
+    it("Should test the HDR_FilterData Field Definition", () => {
+        expect(typeDefs.definitions[8].kind).toEqual("ObjectTypeDefinition");
+        expect(typeDefs.definitions[8].name.value).toEqual("HDR_FilterData");
+        expect(typeDefs.definitions[8].fields).toHaveLength(3);
+
+        // The field definitions
+        expect(typeDefs.definitions[8].fields[0].name.value).toEqual("status");
+        expect(typeDefs.definitions[8].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[8].fields[0].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[8].fields[1].name.value).toEqual("message");
+        expect(typeDefs.definitions[8].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[8].fields[1].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[8].fields[2].name.value).toEqual("data");
+        expect(typeDefs.definitions[8].fields[2].type.kind).toEqual("ListType");
+        expect(typeDefs.definitions[8].fields[2].type.type.name.value).toEqual("HDR_FilterData_Values");
+    });
+
+    it("Should test the HDR_FilterData_Values Field Definition", () => {
+        expect(typeDefs.definitions[9].kind).toEqual("ObjectTypeDefinition");
+        expect(typeDefs.definitions[9].name.value).toEqual("HDR_FilterData_Values");
+        expect(typeDefs.definitions[9].fields).toHaveLength(2);
+
+        // The field definitions
+        expect(typeDefs.definitions[9].fields[0].name.value).toEqual("fieldName");
+        expect(typeDefs.definitions[9].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[9].fields[0].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[9].fields[1].name.value).toEqual("fieldValues");
+        expect(typeDefs.definitions[9].fields[1].type.kind).toEqual("ListType");
+        expect(typeDefs.definitions[9].fields[1].type.type.name.value).toEqual("String");
     });
 });
