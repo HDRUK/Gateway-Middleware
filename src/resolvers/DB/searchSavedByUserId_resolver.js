@@ -61,7 +61,8 @@ module.exports = {
                         const createdOn = moment(searchAuditRow.searchaudit_created_on).format("DD MMM YYYY");
 
                         let combinedResult = {
-                            id: searchAuditId,
+                            id: searchSaved.rows[0].searchsaved_id,
+                            auditId: searchAuditId,
                             detail: searchAuditRow.searchaudit_detail.trim(),
                             endPoint: searchAuditRow.searchaudit_end_point.trim(),
                             recordOffset: searchAuditRow.searchaudit_record_offset,
