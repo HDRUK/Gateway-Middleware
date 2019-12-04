@@ -14,6 +14,7 @@ const hdrCatalogueLogout = require("./HDR/catalogueLogout_resolver");
 const hdrDataModelSearch = require("./HDR/datamodelSearch_resolver");
 const hdrDataModelID = require("./HDR/datamodelID_resolver");
 const hdrFilterValues = require("./HDR/datamodelFilters_resolver");
+const hdrCustomSearch = require("./HDR/customSearch_resolver");
 
 module.exports = [
     searchAuditLog,
@@ -28,5 +29,6 @@ module.exports = [
     hdrCatalogueLogout,
     hdrDataModelSearch,
     hdrDataModelID,
-    hdrFilterValues
+    hdrFilterValues,
+    hdrCustomSearch
 ];

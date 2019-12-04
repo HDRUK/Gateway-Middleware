@@ -12,6 +12,7 @@ const hdrCatalogueLogout = require("./HDR/catalogueLogout_resolver");
 const hdrDataModelSearch = require("./HDR/datamodelSearch_resolver");
 const hdrDataModelID = require("./HDR/datamodelID_resolver");
 const hdrFilterValues = require("./HDR/datamodelFilters_resolver");
+const hdrCustomSearch = require("./HDR/customSearch_resolver");
 
 describe("index.js", () => {
     beforeEach(() => {});
@@ -54,5 +55,8 @@ describe("index.js", () => {
     });
     it("Should test hdrFilterValues Resolver is being loded for use", () => {
         expect(hdrFilterValues).not.toBeNull();
+    });
+    it("Should test hdrCustomSearch Resolver is being loded for use", () => {
+        expect(hdrCustomSearch).not.toBeNull();
     });
 });

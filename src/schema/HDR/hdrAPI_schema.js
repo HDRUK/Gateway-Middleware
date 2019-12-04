@@ -8,6 +8,13 @@ module.exports = gql`
         hdrCatalogueLogout: HDR_CatalogueLogout
         hdrCatalogueItemsSearch(searchTerm: String, recordOffset: Int!, recordLimit: Int!): HDR_MetaData
         hdrFilterValues(filterValues: [String]): HDR_FilterData
+        hdrCustomSearch(
+            searchTerm: String
+            recordOffset: Int!
+            recordLimit: Int!
+            sortField: String
+            filterItems: [String]
+        ): HDR_CustomSearchData
     }
 
     type HDR_MetaData {
@@ -67,5 +74,47 @@ module.exports = gql`
     type HDR_FilterData_Values {
         fieldName: String
         fieldValues: [String]
+    }
+    type HDR_CustomSearchData {
+        status: String
+        message: String
+        count: String
+        data: [HDR_CustomSearchData_Results]
+    }
+    type HDR_CustomSearchData_Results {
+        id: String
+        identifier: String
+        license: String
+        title: String
+        publisher: String
+        creator: String
+        description: String
+        keywords: String
+        language: String
+        dataProcessor: String
+        contactPoint: String
+        dataController: String
+        group: String
+        abstract: String
+        accessRights: String
+        accessRequestCost: String
+        accesRequestDuration: String
+        datasetEndDate: String
+        datasetStartDate: String
+        releaseDate: String
+        periodicity: String
+        physicalSampleAvailability: String
+        statisticalPopulation: String
+        ageBand: String
+        geographicCoverage: String
+        conformsTo: String
+        derivedDatasets: String
+        format: String
+        populationType: String
+        citations: String
+        linkedDataset: String
+        jurisdiction: String
+        doi: String
+        fileSize: String
     }
 `;
