@@ -10,7 +10,7 @@ module.exports = gql`
     }
 
     extend type Mutation {
-        searchSave(
+        searchAuditLogSave(
             userId: String!
             searchTerm: String!
             endPoint: String!
@@ -18,8 +18,8 @@ module.exports = gql`
             recordLimit: Int!
             filters: [FilterInput]
             sort: SortInput!
-            name: String
-        ): GenericQueryResult
+        ): SearchAuditLogResult
+        searchSave(searchAuditId: String!, userId: String!, name: String): GenericQueryResult
         searchDelete(searchSavedId: String!): GenericQueryResult
     }
 
@@ -70,6 +70,11 @@ module.exports = gql`
         status: String
         message: String
     }
+    type SearchAuditLogResult {
+        status: String
+        message: String
+        data: DataId
+    }
     type SearchSavedResult {
         status: String
         message: String
@@ -93,5 +98,8 @@ module.exports = gql`
     type Sort {
         applied: String
         value: String
+    }
+    type DataId {
+        id: String
     }
 `;
