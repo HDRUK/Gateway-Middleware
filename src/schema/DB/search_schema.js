@@ -82,6 +82,7 @@ module.exports = gql`
     }
     type SavedSearch {
         id: ID
+        auditId: ID
         detail: String
         endPoint: String
         recordOffset: Int

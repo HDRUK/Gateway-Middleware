@@ -383,44 +383,48 @@ describe("The results fields are configured correctly", () => {
         const i = 11;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("SavedSearch");
-        expect(typeDefs.definitions[i].fields).toHaveLength(9);
+        expect(typeDefs.definitions[i].fields).toHaveLength(10);
 
         // The field definitions
         expect(typeDefs.definitions[i].fields[0].name.value).toEqual("id");
         expect(typeDefs.definitions[i].fields[0].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[0].type.name.value).toEqual("ID");
 
-        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("detail");
+        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("auditId");
         expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
+        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("ID");
 
-        expect(typeDefs.definitions[i].fields[2].name.value).toEqual("endPoint");
+        expect(typeDefs.definitions[i].fields[2].name.value).toEqual("detail");
         expect(typeDefs.definitions[i].fields[2].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[2].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("recordOffset");
+        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("endPoint");
         expect(typeDefs.definitions[i].fields[3].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[i].fields[3].type.name.value).toEqual("Int");
+        expect(typeDefs.definitions[i].fields[3].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[4].name.value).toEqual("recordLimit");
+        expect(typeDefs.definitions[i].fields[4].name.value).toEqual("recordOffset");
         expect(typeDefs.definitions[i].fields[4].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[4].type.name.value).toEqual("Int");
 
-        expect(typeDefs.definitions[i].fields[5].name.value).toEqual("createdOn");
+        expect(typeDefs.definitions[i].fields[5].name.value).toEqual("recordLimit");
         expect(typeDefs.definitions[i].fields[5].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[i].fields[5].type.name.value).toEqual("String");
+        expect(typeDefs.definitions[i].fields[5].type.name.value).toEqual("Int");
 
-        expect(typeDefs.definitions[i].fields[6].name.value).toEqual("name");
+        expect(typeDefs.definitions[i].fields[6].name.value).toEqual("createdOn");
         expect(typeDefs.definitions[i].fields[6].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[6].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[7].name.value).toEqual("filters");
-        expect(typeDefs.definitions[i].fields[7].type.kind).toEqual("ListType");
-        expect(typeDefs.definitions[i].fields[7].type.type.name.value).toEqual("Filter");
+        expect(typeDefs.definitions[i].fields[7].name.value).toEqual("name");
+        expect(typeDefs.definitions[i].fields[7].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[7].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[8].name.value).toEqual("sort");
-        expect(typeDefs.definitions[i].fields[8].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[i].fields[8].type.name.value).toEqual("Sort");
+        expect(typeDefs.definitions[i].fields[8].name.value).toEqual("filters");
+        expect(typeDefs.definitions[i].fields[8].type.kind).toEqual("ListType");
+        expect(typeDefs.definitions[i].fields[8].type.type.name.value).toEqual("Filter");
+
+        expect(typeDefs.definitions[i].fields[9].name.value).toEqual("sort");
+        expect(typeDefs.definitions[i].fields[9].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[9].type.name.value).toEqual("Sort");
     });
 
     it("Should test the Filter Field Definition", () => {
