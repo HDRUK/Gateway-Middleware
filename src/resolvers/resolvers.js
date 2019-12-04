@@ -1,5 +1,6 @@
 // The DB Resolvers
 const searchAuditLog = require("./DB/searchAuditLog_resolver");
+const searchAuditLogSave = require("./DB/searchAuditLogSave_resolver");
 const searchFilters = require("./DB/searchFilters_resolver");
 const searchSort = require("./DB/searchSort_resolver");
 const searchSaved = require("./DB/searchSaved_resolver");
@@ -18,6 +19,7 @@ const hdrCustomSearch = require("./HDR/customSearch_resolver");
 
 module.exports = [
     searchAuditLog,
+    searchAuditLogSave,
     searchFilters,
     searchSort,
     searchSaved,

@@ -48,19 +48,19 @@ describe("Check that the Search Schema is defined", () => {
 
     it("Should test that the Mutations are all defined", () => {
         expect(typeDefs.definitions[1].name.value).toEqual("Mutation");
-        expect(typeDefs.definitions[1].fields.length).toEqual(2);
+        expect(typeDefs.definitions[1].fields.length).toEqual(3);
     });
 
-    it("Should check that the searchSave Mutation is defined correctly", () => {
-        expect(typeDefs.definitions[1].fields[0].name.value).toEqual("searchSave");
+    it("Should check that the searchAuditLogSave Mutation is defined correctly", () => {
+        expect(typeDefs.definitions[1].fields[0].name.value).toEqual("searchAuditLogSave");
         expect(typeDefs.definitions[1].fields[0].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[1].fields[0].type.name.value).toEqual("GenericQueryResult");
+        expect(typeDefs.definitions[1].fields[0].type.name.value).toEqual("SearchAuditLogResult");
     });
 
-    it("Should check the searchSave input parameters", () => {
+    it("Should check the searchAuditLogSave input parameters", () => {
         const i = 1;
         const inputs = typeDefs.definitions[i].fields[0].arguments;
-        expect(inputs.length).toEqual(8);
+        expect(inputs.length).toEqual(7);
         expect(inputs[0].name.value).toEqual("userId");
         expect(inputs[0].type.kind).toEqual("NonNullType");
         expect(inputs[0].type.type.name.value).toEqual("String");
@@ -88,20 +88,39 @@ describe("Check that the Search Schema is defined", () => {
         expect(inputs[6].name.value).toEqual("sort");
         expect(inputs[6].type.kind).toEqual("NonNullType");
         expect(inputs[6].type.type.name.value).toEqual("SortInput");
-
-        expect(inputs[7].name.value).toEqual("name");
-        expect(inputs[7].type.kind).toEqual("NamedType");
-        expect(inputs[7].type.name.value).toEqual("String");
     });
 
-    it("Should check that the searchDelete Mutation is defined correctly", () => {
-        expect(typeDefs.definitions[1].fields[1].name.value).toEqual("searchDelete");
+    it("Should check that the searchSave Mutation is defined correctly", () => {
+        expect(typeDefs.definitions[1].fields[1].name.value).toEqual("searchSave");
         expect(typeDefs.definitions[1].fields[1].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[1].fields[1].type.name.value).toEqual("GenericQueryResult");
     });
 
+    it("Should check the searchSave input parameters", () => {
+        const i = 1;
+        const inputs = typeDefs.definitions[i].fields[1].arguments;
+        expect(inputs.length).toEqual(3);
+        expect(inputs[0].name.value).toEqual("searchAuditId");
+        expect(inputs[0].type.kind).toEqual("NonNullType");
+        expect(inputs[0].type.type.name.value).toEqual("String");
+
+        expect(inputs[1].name.value).toEqual("userId");
+        expect(inputs[1].type.kind).toEqual("NonNullType");
+        expect(inputs[1].type.type.name.value).toEqual("String");
+
+        expect(inputs[2].name.value).toEqual("name");
+        expect(inputs[2].type.kind).toEqual("NamedType");
+        expect(inputs[2].type.name.value).toEqual("String");
+    });
+
+    it("Should check that the searchDelete Mutation is defined correctly", () => {
+        expect(typeDefs.definitions[1].fields[2].name.value).toEqual("searchDelete");
+        expect(typeDefs.definitions[1].fields[2].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[1].fields[2].type.name.value).toEqual("GenericQueryResult");
+    });
+
     it("Should check the searchDelete input parameters", () => {
-        const inputs = typeDefs.definitions[1].fields[1].arguments;
+        const inputs = typeDefs.definitions[1].fields[2].arguments;
         expect(inputs.length).toEqual(1);
         expect(inputs[0].name.value).toEqual("searchSavedId");
         expect(inputs[0].type.kind).toEqual("NonNullType");
@@ -304,7 +323,7 @@ describe("The DB Search is configured correctly", () => {
 describe("The results fields are configured correctly", () => {
     beforeEach(() => {});
 
-    it("Should test the SearchSaveResult Field Definition", () => {
+    it("Should test the GenericQueryResult Field Definition", () => {
         const i = 8;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("GenericQueryResult");
@@ -320,8 +339,28 @@ describe("The results fields are configured correctly", () => {
         expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
     });
 
-    it("Should test the SearchSavedResult Field Definition", () => {
+    it("Should test the SearchAuditLogResult Field Definition", () => {
         const i = 9;
+        expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
+        expect(typeDefs.definitions[i].name.value).toEqual("SearchAuditLogResult");
+        expect(typeDefs.definitions[i].fields).toHaveLength(3);
+
+        // The field definitions
+        expect(typeDefs.definitions[i].fields[0].name.value).toEqual("status");
+        expect(typeDefs.definitions[i].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[0].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("message");
+        expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[2].name.value).toEqual("data");
+        expect(typeDefs.definitions[i].fields[2].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[2].type.name.value).toEqual("DataId");
+    });
+
+    it("Should test the SearchSavedResult Field Definition", () => {
+        const i = 10;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("SearchSavedResult");
         expect(typeDefs.definitions[i].fields).toHaveLength(3);
@@ -341,51 +380,55 @@ describe("The results fields are configured correctly", () => {
     });
 
     it("Should test the SavedSearch Field Definition", () => {
-        const i = 10;
+        const i = 11;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("SavedSearch");
-        expect(typeDefs.definitions[i].fields).toHaveLength(9);
+        expect(typeDefs.definitions[i].fields).toHaveLength(10);
 
         // The field definitions
         expect(typeDefs.definitions[i].fields[0].name.value).toEqual("id");
         expect(typeDefs.definitions[i].fields[0].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[0].type.name.value).toEqual("ID");
 
-        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("detail");
+        expect(typeDefs.definitions[i].fields[1].name.value).toEqual("auditId");
         expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
+        expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("ID");
 
-        expect(typeDefs.definitions[i].fields[2].name.value).toEqual("endPoint");
+        expect(typeDefs.definitions[i].fields[2].name.value).toEqual("detail");
         expect(typeDefs.definitions[i].fields[2].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[2].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("recordOffset");
+        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("endPoint");
         expect(typeDefs.definitions[i].fields[3].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[i].fields[3].type.name.value).toEqual("Int");
+        expect(typeDefs.definitions[i].fields[3].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[4].name.value).toEqual("recordLimit");
+        expect(typeDefs.definitions[i].fields[4].name.value).toEqual("recordOffset");
         expect(typeDefs.definitions[i].fields[4].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[4].type.name.value).toEqual("Int");
 
-        expect(typeDefs.definitions[i].fields[5].name.value).toEqual("createdOn");
+        expect(typeDefs.definitions[i].fields[5].name.value).toEqual("recordLimit");
         expect(typeDefs.definitions[i].fields[5].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[i].fields[5].type.name.value).toEqual("String");
+        expect(typeDefs.definitions[i].fields[5].type.name.value).toEqual("Int");
 
-        expect(typeDefs.definitions[i].fields[6].name.value).toEqual("name");
+        expect(typeDefs.definitions[i].fields[6].name.value).toEqual("createdOn");
         expect(typeDefs.definitions[i].fields[6].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[6].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[7].name.value).toEqual("filters");
-        expect(typeDefs.definitions[i].fields[7].type.kind).toEqual("ListType");
-        expect(typeDefs.definitions[i].fields[7].type.type.name.value).toEqual("Filter");
+        expect(typeDefs.definitions[i].fields[7].name.value).toEqual("name");
+        expect(typeDefs.definitions[i].fields[7].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[7].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[8].name.value).toEqual("sort");
-        expect(typeDefs.definitions[i].fields[8].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[i].fields[8].type.name.value).toEqual("Sort");
+        expect(typeDefs.definitions[i].fields[8].name.value).toEqual("filters");
+        expect(typeDefs.definitions[i].fields[8].type.kind).toEqual("ListType");
+        expect(typeDefs.definitions[i].fields[8].type.type.name.value).toEqual("Filter");
+
+        expect(typeDefs.definitions[i].fields[9].name.value).toEqual("sort");
+        expect(typeDefs.definitions[i].fields[9].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[9].type.name.value).toEqual("Sort");
     });
 
     it("Should test the Filter Field Definition", () => {
-        const i = 11;
+        const i = 12;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("Filter");
         expect(typeDefs.definitions[i].fields).toHaveLength(2);
@@ -401,7 +444,7 @@ describe("The results fields are configured correctly", () => {
     });
 
     it("Should test the Sort Field Definition", () => {
-        const i = 12;
+        const i = 13;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("Sort");
         expect(typeDefs.definitions[i].fields).toHaveLength(2);
@@ -414,5 +457,17 @@ describe("The results fields are configured correctly", () => {
         expect(typeDefs.definitions[i].fields[1].name.value).toEqual("value");
         expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
+    });
+
+    it("Should test the DataId Field Definition", () => {
+        const i = 14;
+        expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
+        expect(typeDefs.definitions[i].name.value).toEqual("DataId");
+        expect(typeDefs.definitions[i].fields).toHaveLength(1);
+
+        // The field definitions
+        expect(typeDefs.definitions[i].fields[0].name.value).toEqual("id");
+        expect(typeDefs.definitions[i].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[0].type.name.value).toEqual("String");
     });
 });
