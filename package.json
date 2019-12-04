@@ -20,9 +20,13 @@
     "homepage": "https://bitbucket.org/hdr_mvp_gateway/hdr_mvp_gateway_middleware#readme",
     "dependencies": {
         "apollo-server": "^2.9.6",
+        "apollo-server-express": "^2.9.12",
+        "cors": "^2.8.5",
         "dotenv": "^8.2.0",
+        "express": "^4.17.1",
         "graphql": "^14.5.8",
         "moment": "^2.24.0",
+        "passport": "^0.4.0",
         "pg": "^7.12.1",
         "winston": "^3.2.1",
         "winston-daily-rotate-file": "^4.2.1"
