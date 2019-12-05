@@ -1,5 +1,6 @@
 // The DB Resolvers
 const searchAuditLog = require("./DB/searchAuditLog_resolver");
+const searchAuditLogSave = require("./DB/searchAuditLogSave_resolver");
 const searchFilters = require("./DB/searchFilters_resolver");
 const searchSort = require("./DB/searchSort_resolver");
 const searchSaved = require("./DB/searchSaved_resolver");
@@ -14,9 +15,11 @@ const hdrCatalogueLogout = require("./HDR/catalogueLogout_resolver");
 const hdrDataModelSearch = require("./HDR/datamodelSearch_resolver");
 const hdrDataModelID = require("./HDR/datamodelID_resolver");
 const hdrFilterValues = require("./HDR/datamodelFilters_resolver");
+const hdrCustomSearch = require("./HDR/customSearch_resolver");
 
 module.exports = [
     searchAuditLog,
+    searchAuditLogSave,
     searchFilters,
     searchSort,
     searchSaved,
@@ -28,5 +31,6 @@ module.exports = [
     hdrCatalogueLogout,
     hdrDataModelSearch,
     hdrDataModelID,
-    hdrFilterValues
+    hdrFilterValues,
+    hdrCustomSearch
 ];

@@ -1,39 +1,42 @@
 const dbConnect = require("../../db/db");
 
-const searchAuditLogQueryString = (userId, searchTerm, endPoint, offSet, recordLimit) => `
-    INSERT INTO searchaudit_log (searchaudit_user_id, searchaudit_detail, searchaudit_end_point, searchaudit_record_offset, searchaudit_record_limit)
-    VALUES ('${userId}', '${searchTerm}', '${endPoint}', '${offSet}', '${recordLimit}')
-    RETURNING searchaudit_id`;
-
-const filterValuesString = (searchAuditId, value, type) => `('${searchAuditId}', '${value}', '${type}')`;
-
-const searchFilterQueryString = (searchAuditId, filters) => `
-    INSERT INTO searchfilters (searchfilters_searchaudit_id, searchfilters_value, searchfilters_type)
-    VALUES ${filters.map(filter => filterValuesString(searchAuditId, filter.value, filter.type)).join(", ")}`;
-
-const searchSortQueryString = (searchAuditId, applied, value) => `
-    INSERT INTO searchsort (searchsort_searchaudit_id, searchsort_applied, searchsort_value)
-    VALUES ('${searchAuditId}', '${applied}', '${value}')`;
-
 const searchSavedQueryString = (searchAuditId, userId, name) => `
     INSERT INTO searchsaved (searchsaved_searchaudit_id, searchsaved_user_id${name ? ", searchsaved_name" : ""})
     VALUES ('${searchAuditId}', '${userId}'${name ? `, '${name}'` : ""})`;
 
+const searchNameCheckQueryString = (userId, name) => `
+    SELECT searchsaved_searchaudit_id
+    FROM searchsaved
+    WHERE searchsaved_user_id='${userId}' AND searchsaved_name='${name}'`;
+
+const searchCountCheckQueryString = userId => `
+    SELECT count(searchsaved_id)::int
+    FROM searchsaved
+    WHERE searchsaved_user_id='${userId}'`;
+
+const maxSavedSearches = 25;
+
 module.exports = {
     Mutation: {
-        searchSave: async (_, { userId, searchTerm, endPoint, offSet, recordLimit, filters, sort, name }) => {
+        searchSave: async (_, { searchAuditId, userId, name }) => {
             try {
-                const searchAuditLogSQL = searchAuditLogQueryString(userId, searchTerm, endPoint, offSet, recordLimit);
-                const searchAudit = await dbConnect.query(searchAuditLogSQL);
-                const searchAuditId = searchAudit.rows[0].searchaudit_id;
+                const searchCountCheckSQL = searchCountCheckQueryString(userId);
+                const searchCountCheckData = await dbConnect.query(searchCountCheckSQL);
+                if (searchCountCheckData && searchCountCheckData.rows[0].count >= maxSavedSearches)
+                    return {
+                        status: 403,
+                        message: `Unable to save - no more than ${maxSavedSearches} saved searches allowed`
+                    };
 
-                if (filters && filters.length > 0) {
-                    const searchFilterSQL = searchFilterQueryString(searchAuditId, filters);
-                    await dbConnect.query(searchFilterSQL);
+                if (name) {
+                    const searchNameCheckSQL = searchNameCheckQueryString(userId, name);
+                    const searchNameCheckData = await dbConnect.query(searchNameCheckSQL);
+                    if (searchNameCheckData && searchNameCheckData.rows.length > 0)
+                        return {
+                            status: 403,
+                            message: "Unable to save - name already exists"
+                        };
                 }
-
-                const searchSortSQL = searchSortQueryString(searchAuditId, sort.applied, sort.value);
-                await dbConnect.query(searchSortSQL);
 
                 const searchSavedSQL = searchSavedQueryString(searchAuditId, userId, name);
                 await dbConnect.query(searchSavedSQL);

@@ -5,7 +5,7 @@ describe("Check that the correct HDR API's defined", () => {
 
     it("should test that the Queries are all defined", () => {
         expect(typeDefs.definitions[0].name.value).toEqual("Query");
-        expect(typeDefs.definitions[0].fields.length).toEqual(6);
+        expect(typeDefs.definitions[0].fields.length).toEqual(7);
     });
 
     it("Should check that the hdrDataModelSearch Query is defined correctly", () => {
@@ -41,6 +41,39 @@ describe("Check that the correct HDR API's defined", () => {
         expect(typeDefs.definitions[0].fields[5].name.value).toEqual("hdrFilterValues");
         expect(typeDefs.definitions[0].fields[5].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[0].fields[5].type.name.value).toEqual("HDR_FilterData");
+    });
+
+    it("Should check that the hdrCustomSearch Query is defined correctly", () => {
+        expect(typeDefs.definitions[0].fields[6].name.value).toEqual("hdrCustomSearch");
+        expect(typeDefs.definitions[0].fields[6].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[0].fields[6].type.name.value).toEqual("HDR_CustomSearchData");
+    });
+
+    it("Should check that the hdrCustomSearch Input Values are defined correctly", () => {
+        expect(typeDefs.definitions[0].fields[6].arguments).toHaveLength(5);
+
+        expect(typeDefs.definitions[0].fields[6].arguments[0].kind).toEqual("InputValueDefinition");
+        expect(typeDefs.definitions[0].fields[6].arguments[0].name.value).toEqual("searchTerm");
+        expect(typeDefs.definitions[0].fields[6].arguments[0].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[0].fields[6].arguments[1].kind).toEqual("InputValueDefinition");
+        expect(typeDefs.definitions[0].fields[6].arguments[1].name.value).toEqual("recordOffset");
+        expect(typeDefs.definitions[0].fields[6].arguments[1].type.kind).toEqual("NonNullType");
+        expect(typeDefs.definitions[0].fields[6].arguments[1].type.type.name.value).toEqual("Int");
+
+        expect(typeDefs.definitions[0].fields[6].arguments[2].kind).toEqual("InputValueDefinition");
+        expect(typeDefs.definitions[0].fields[6].arguments[2].name.value).toEqual("recordLimit");
+        expect(typeDefs.definitions[0].fields[6].arguments[2].type.kind).toEqual("NonNullType");
+        expect(typeDefs.definitions[0].fields[6].arguments[2].type.type.name.value).toEqual("Int");
+
+        expect(typeDefs.definitions[0].fields[6].arguments[3].kind).toEqual("InputValueDefinition");
+        expect(typeDefs.definitions[0].fields[6].arguments[3].name.value).toEqual("sortField");
+        expect(typeDefs.definitions[0].fields[6].arguments[3].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[0].fields[6].arguments[4].kind).toEqual("InputValueDefinition");
+        expect(typeDefs.definitions[0].fields[6].arguments[4].name.value).toEqual("filterItems");
+        expect(typeDefs.definitions[0].fields[6].arguments[4].type.kind).toEqual("ListType");
+        expect(typeDefs.definitions[0].fields[6].arguments[4].type.type.name.value).toEqual("String");
     });
 });
 
@@ -264,5 +297,213 @@ describe("The Metdata Catalogue API's are configured correctly", () => {
         expect(typeDefs.definitions[9].fields[1].name.value).toEqual("fieldValues");
         expect(typeDefs.definitions[9].fields[1].type.kind).toEqual("ListType");
         expect(typeDefs.definitions[9].fields[1].type.type.name.value).toEqual("String");
+    });
+
+    it("Should test the HDR_CustomSearchData Field Definition", () => {
+        const nextNum = 10;
+
+        expect(typeDefs.definitions[nextNum].kind).toEqual("ObjectTypeDefinition");
+        expect(typeDefs.definitions[nextNum].name.value).toEqual("HDR_CustomSearchData");
+        expect(typeDefs.definitions[nextNum].fields).toHaveLength(4);
+
+        // The field definitions
+        expect(typeDefs.definitions[nextNum].fields[0].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[0].name.value).toEqual("status");
+        expect(typeDefs.definitions[nextNum].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[0].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[1].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[1].name.value).toEqual("message");
+        expect(typeDefs.definitions[nextNum].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[1].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[2].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[2].name.value).toEqual("count");
+        expect(typeDefs.definitions[nextNum].fields[2].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[2].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[3].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[3].name.value).toEqual("data");
+        expect(typeDefs.definitions[nextNum].fields[3].type.kind).toEqual("ListType");
+        expect(typeDefs.definitions[nextNum].fields[3].type.type.name.value).toEqual("HDR_CustomSearchData_Results");
+    });
+
+    it("Should test the HDR_CustomSearchData_Results Field Definition", () => {
+        const nextNum = 11;
+
+        expect(typeDefs.definitions[nextNum].kind).toEqual("ObjectTypeDefinition");
+        expect(typeDefs.definitions[nextNum].name.value).toEqual("HDR_CustomSearchData_Results");
+        expect(typeDefs.definitions[nextNum].fields).toHaveLength(34);
+
+        // The field definitions
+        expect(typeDefs.definitions[nextNum].fields[0].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[0].name.value).toEqual("id");
+        expect(typeDefs.definitions[nextNum].fields[0].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[0].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[1].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[1].name.value).toEqual("identifier");
+        expect(typeDefs.definitions[nextNum].fields[1].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[1].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[2].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[2].name.value).toEqual("license");
+        expect(typeDefs.definitions[nextNum].fields[2].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[2].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[3].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[3].name.value).toEqual("title");
+        expect(typeDefs.definitions[nextNum].fields[3].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[3].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[4].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[4].name.value).toEqual("publisher");
+        expect(typeDefs.definitions[nextNum].fields[4].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[4].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[5].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[5].name.value).toEqual("creator");
+        expect(typeDefs.definitions[nextNum].fields[5].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[5].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[6].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[6].name.value).toEqual("description");
+        expect(typeDefs.definitions[nextNum].fields[6].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[6].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[7].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[7].name.value).toEqual("keywords");
+        expect(typeDefs.definitions[nextNum].fields[7].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[7].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[8].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[8].name.value).toEqual("language");
+        expect(typeDefs.definitions[nextNum].fields[8].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[8].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[9].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[9].name.value).toEqual("dataProcessor");
+        expect(typeDefs.definitions[nextNum].fields[9].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[9].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[10].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[10].name.value).toEqual("contactPoint");
+        expect(typeDefs.definitions[nextNum].fields[10].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[10].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[11].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[11].name.value).toEqual("dataController");
+        expect(typeDefs.definitions[nextNum].fields[11].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[11].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[12].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[12].name.value).toEqual("group");
+        expect(typeDefs.definitions[nextNum].fields[12].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[12].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[13].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[13].name.value).toEqual("abstract");
+        expect(typeDefs.definitions[nextNum].fields[13].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[13].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[14].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[14].name.value).toEqual("accessRights");
+        expect(typeDefs.definitions[nextNum].fields[14].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[14].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[15].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[15].name.value).toEqual("accessRequestCost");
+        expect(typeDefs.definitions[nextNum].fields[15].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[15].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[16].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[16].name.value).toEqual("accesRequestDuration");
+        expect(typeDefs.definitions[nextNum].fields[16].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[16].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[17].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[17].name.value).toEqual("datasetEndDate");
+        expect(typeDefs.definitions[nextNum].fields[17].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[17].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[18].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[18].name.value).toEqual("datasetStartDate");
+        expect(typeDefs.definitions[nextNum].fields[18].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[18].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[19].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[19].name.value).toEqual("releaseDate");
+        expect(typeDefs.definitions[nextNum].fields[19].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[19].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[20].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[20].name.value).toEqual("periodicity");
+        expect(typeDefs.definitions[nextNum].fields[20].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[20].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[21].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[21].name.value).toEqual("physicalSampleAvailability");
+        expect(typeDefs.definitions[nextNum].fields[21].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[21].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[22].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[22].name.value).toEqual("statisticalPopulation");
+        expect(typeDefs.definitions[nextNum].fields[22].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[22].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[23].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[23].name.value).toEqual("ageBand");
+        expect(typeDefs.definitions[nextNum].fields[23].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[23].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[24].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[24].name.value).toEqual("geographicCoverage");
+        expect(typeDefs.definitions[nextNum].fields[24].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[24].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[25].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[25].name.value).toEqual("conformsTo");
+        expect(typeDefs.definitions[nextNum].fields[25].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[25].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[26].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[26].name.value).toEqual("derivedDatasets");
+        expect(typeDefs.definitions[nextNum].fields[26].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[26].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[27].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[27].name.value).toEqual("format");
+        expect(typeDefs.definitions[nextNum].fields[27].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[27].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[28].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[28].name.value).toEqual("populationType");
+        expect(typeDefs.definitions[nextNum].fields[28].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[28].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[29].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[29].name.value).toEqual("citations");
+        expect(typeDefs.definitions[nextNum].fields[29].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[29].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[30].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[30].name.value).toEqual("linkedDataset");
+        expect(typeDefs.definitions[nextNum].fields[30].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[30].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[31].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[31].name.value).toEqual("jurisdiction");
+        expect(typeDefs.definitions[nextNum].fields[31].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[31].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[32].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[32].name.value).toEqual("doi");
+        expect(typeDefs.definitions[nextNum].fields[32].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[32].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[33].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[33].name.value).toEqual("fileSize");
+        expect(typeDefs.definitions[nextNum].fields[33].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[33].type.name.value).toEqual("String");
     });
 });
