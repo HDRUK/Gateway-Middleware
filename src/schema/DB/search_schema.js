@@ -11,7 +11,7 @@ module.exports = gql`
 
     extend type Mutation {
         searchAuditLogSave(
-            userId: String!
+            userId: String
             searchTerm: String!
             endPoint: String!
             offSet: Int!

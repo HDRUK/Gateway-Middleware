@@ -62,8 +62,8 @@ describe("Check that the Search Schema is defined", () => {
         const inputs = typeDefs.definitions[i].fields[0].arguments;
         expect(inputs.length).toEqual(7);
         expect(inputs[0].name.value).toEqual("userId");
-        expect(inputs[0].type.kind).toEqual("NonNullType");
-        expect(inputs[0].type.type.name.value).toEqual("String");
+        expect(inputs[0].type.kind).toEqual("NamedType");
+        expect(inputs[0].type.name.value).toEqual("String");
 
         expect(inputs[1].name.value).toEqual("searchTerm");
         expect(inputs[1].type.kind).toEqual("NonNullType");
