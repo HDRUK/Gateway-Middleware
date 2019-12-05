@@ -37,7 +37,7 @@ env:
                 spec: 
                   containers: 
                   - name: middleware 
-                    image: 148375436316.dkr.ecr.eu-west-2.amazonaws.com/hdr-gateway-middleware:latest 
+                    image: 098490641074.dkr.ecr.eu-west-2.amazonaws.com/middleware-test-repository
                     imagePullPolicy: Always 
                     ports: 
                     - containerPort: 5001 
