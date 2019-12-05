@@ -1,4 +1,5 @@
 const dbConnect = require("../../db/db");
+const logger = require("../../utils/logger");
 
 const searchSavedQueryString = (searchAuditId, userId, name) => `
     INSERT INTO searchsaved (searchsaved_searchaudit_id, searchsaved_user_id${name ? ", searchsaved_name" : ""})
@@ -18,7 +19,10 @@ const maxSavedSearches = 25;
 
 module.exports = {
     Mutation: {
-        searchSave: async (_, { searchAuditId, userId, name }) => {
+        searchSave: async (_, { searchAuditId, userId, name }, context) => {
+            if (context.user.eduPersonTargetedID !== userId) {
+                logger.log("error", "User can't be authenticated");
+            }
             try {
                 const searchCountCheckSQL = searchCountCheckQueryString(userId);
                 const searchCountCheckData = await dbConnect.query(searchCountCheckSQL);
