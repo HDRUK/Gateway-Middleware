@@ -1,5 +1,6 @@
 const dbConnect = require("../../db/db");
 const moment = require("moment");
+const logger = require("../../utils/logger");
 
 const getSearchSavedQueryString = userId => `
     SELECT searchsaved_id, searchsaved_searchaudit_id, searchsaved_created_on, searchsaved_name
@@ -23,7 +24,10 @@ const getSearchSortQueryString = searchAuditId => `
 
 module.exports = {
     Query: {
-        getSearchSavedByUserID: async (_, { userId }) => {
+        getSearchSavedByUserID: async (_, { userId }, context) => {
+            if (context.user.eduPersonTargetedID !== userId) {
+                logger.log("error", "User can't be authenticated");
+            }
             try {
                 const searchSavedSQL = getSearchSavedQueryString(userId);
                 const searchSaved = await dbConnect.query(searchSavedSQL);
@@ -61,7 +65,8 @@ module.exports = {
                         const createdOn = moment(searchAuditRow.searchaudit_created_on).format("DD MMM YYYY");
 
                         let combinedResult = {
-                            id: searchAuditId,
+                            id: search.searchsaved_id,
+                            auditId: searchAuditId,
                             detail: searchAuditRow.searchaudit_detail.trim(),
                             endPoint: searchAuditRow.searchaudit_end_point.trim(),
                             recordOffset: searchAuditRow.searchaudit_record_offset,
