@@ -72,6 +72,7 @@ phases:
             #- kubectl create namespace $NAMESPACE 
             - echo getting deployments... 
             - kubectl describe deployments --namespace=$NAMESPACE 
+            - kubectl api-resources | grep deployment
  
     build: 
         commands: 
