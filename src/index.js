@@ -1,22 +1,12 @@
-const express = require("express");
-const { ApolloServer } = require("apollo-server-express");
+const { ApolloServer } = require("apollo-server");
 require("dotenv").config();
 
 const logger = require("./utils/logger");
 const typeDefs = require("./schema/schema");
 const resolvers = require("./resolvers/resolvers");
-const cors = require("cors");
 const fetch = require("node-fetch");
 
 const port = process.env.PORT;
-
-const app = express();
-const corsOptions = {
-    origin: process.env.FRONTEND_APP,
-    credentials: true
-};
-
-app.use(cors(corsOptions));
 
 const getUser = async token => {
     try {
@@ -39,6 +29,7 @@ const getUser = async token => {
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    cors: { origin: process.env.FRONTEND_APP, credentials: true },
     context: async ({ req }) => {
         const tokenWithBearer = req.headers.authorization || "";
         const token = tokenWithBearer.split(" ")[1];
@@ -57,15 +48,9 @@ const server = new ApolloServer({
     }
 });
 
-server.applyMiddleware({
-    app,
-    path: "/",
-    cors: false
-});
-
-app.listen(port, () =>
+server.listen(port).then(({ url }) => {
     logger.log({
         level: "info",
-        message: `Server running on Port ${port}`
-    })
-);
+        message: `Server running on Port ${url}`
+    });
+});
