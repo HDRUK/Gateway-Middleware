@@ -4,8 +4,10 @@ module.exports = {
     Query: {
         hdrCustomSearch: async (obj, params) => {
             try {
+                const filterItems = params.filterItems ? params.filterItems : "";
+
                 const apiData = await fetch(
-                    `${process.env.API_BASE_URL}${process.env.API_CUSTOM_SEARCH}${params.filterItems}`,
+                    `${process.env.API_BASE_URL}${process.env.API_CUSTOM_SEARCH}${filterItems}`,
                     {
                         method: "POST",
                         headers: {
