@@ -8,7 +8,7 @@ env:
             kind: Service  
             metadata:  
               name: middleware-service  
-              namespace: hdrtest 
+              namespace: hdrtest
             spec:  
               type: LoadBalancer  
               ports:  
@@ -24,7 +24,7 @@ env:
             kind: Deployment 
             metadata: 
               name: middleware-deployment 
-              namespace: hdrtest
+              namespace: hdrtest 
             spec: 
               replicas: 3 
               selector: 
@@ -37,7 +37,7 @@ env:
                 spec: 
                   containers: 
                   - name: middleware 
-                    image: 098490641074.dkr.ecr.eu-west-2.amazonaws.com/middleware-repository:latest
+                    image: 148375436316.dkr.ecr.eu-west-2.amazonaws.com/hdr-gateway-middleware:latest 
                     imagePullPolicy: Always 
                     ports: 
                     - containerPort: 5001 
@@ -68,11 +68,8 @@ phases:
             - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration') 
             - echo updating kubeconfig... 
             - aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $EKS_CLUSTER_NAME 
-            #- echo create namespace only run once... 
-            #- kubectl create namespace $NAMESPACE 
             - echo getting deployments... 
             - kubectl describe deployments --namespace=$NAMESPACE 
-            - kubectl api-resources | grep deployment
  
     build: 
         commands: 
@@ -85,9 +82,9 @@ phases:
             #uncomment the 5 lines BELOW this if CONGIG in variables above change 
             - echo creating deploy file... 
             - touch deploy.yml 
-            - echo "$DEPLOY">>deploy.yml 
+            - echo "$DEPLOY">>deploys.yml 
             - echo exposing deployment to load balancer... 
-            - kubectl apply -f deploy.yml --validate=false 
+            - kubectl apply -f deploys.yml --validate=false 
             - echo creating service file... 
             - touch service.yml 
             - echo "$SERVICE">>service.yml 
@@ -102,3 +99,5 @@ phases:
             #uncomment BELOW to rollback to previous deployment version 
             #- echo rollback to previous deployment version... 
             #- kubectl rollout undo deployments/$APP_NAME 
+ 
+
