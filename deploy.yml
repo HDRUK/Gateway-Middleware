@@ -24,7 +24,7 @@ env:
             kind: Deployment 
             metadata: 
               name: middleware-deployment 
-              namespace: hdrdev 
+              namespace: hdrtest
             spec: 
               replicas: 3 
               selector: 
