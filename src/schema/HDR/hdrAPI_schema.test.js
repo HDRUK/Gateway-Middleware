@@ -123,7 +123,7 @@ describe("The Metdata Catalogue API's are configured correctly", () => {
 
         expect(typeDefs.definitions[2].fields[3].name.value).toEqual("data");
         expect(typeDefs.definitions[2].fields[3].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[2].fields[3].type.name.value).toEqual("HDR_MetaData_Result");
+        expect(typeDefs.definitions[2].fields[3].type.name.value).toEqual("HDR_CustomSearchData_Results");
     });
 
     it("Should test the HDR_MetaData_Result Field Definition", () => {

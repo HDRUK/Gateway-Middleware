@@ -27,7 +27,7 @@ module.exports = gql`
         status: String
         message: String
         count: String
-        data: HDR_MetaData_Result
+        data: HDR_CustomSearchData_Results
     }
     type HDR_MetaData_Result {
         id: String

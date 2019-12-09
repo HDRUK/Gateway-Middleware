@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 module.exports = {
     Query: {
         hdrDataModelID: async (obj, params) => {
-            return fetch(`${process.env.API_BASE_URL}${process.env.API_ALL_DATAMODELS}/${params.ID}`, {
+            return fetch(`${process.env.API_BASE_URL}facets/${params.ID}/${process.env.API_MODEL_BY_ID}`, {
                 method: "GET",
                 headers: {
                     Accept: "*/*",
