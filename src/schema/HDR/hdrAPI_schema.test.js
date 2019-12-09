@@ -333,7 +333,7 @@ describe("The Metdata Catalogue API's are configured correctly", () => {
 
         expect(typeDefs.definitions[nextNum].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[nextNum].name.value).toEqual("HDR_CustomSearchData_Results");
-        expect(typeDefs.definitions[nextNum].fields).toHaveLength(34);
+        expect(typeDefs.definitions[nextNum].fields).toHaveLength(36);
 
         // The field definitions
         expect(typeDefs.definitions[nextNum].fields[0].kind).toEqual("FieldDefinition");
@@ -505,5 +505,15 @@ describe("The Metdata Catalogue API's are configured correctly", () => {
         expect(typeDefs.definitions[nextNum].fields[33].name.value).toEqual("fileSize");
         expect(typeDefs.definitions[nextNum].fields[33].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[nextNum].fields[33].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[34].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[34].name.value).toEqual("label");
+        expect(typeDefs.definitions[nextNum].fields[34].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[34].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[nextNum].fields[35].kind).toEqual("FieldDefinition");
+        expect(typeDefs.definitions[nextNum].fields[35].name.value).toEqual("lastUpdated");
+        expect(typeDefs.definitions[nextNum].fields[35].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[nextNum].fields[35].type.name.value).toEqual("String");
     });
 });

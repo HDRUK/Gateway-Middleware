@@ -116,5 +116,7 @@ module.exports = gql`
         jurisdiction: String
         doi: String
         fileSize: String
+        label: String
+        lastUpdated: String
     }
 `;
