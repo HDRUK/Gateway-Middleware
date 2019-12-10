@@ -1,9 +1,11 @@
 const fetch = require("node-fetch");
 
+const API_REF = require("../../utils/hdrAPIConfig");
+
 module.exports = {
     Query: {
         hdrDataModelSearch: async () => {
-            return fetch(`${process.env.API_BASE_URL}${process.env.API_ALL_DATAMODELS}`, {
+            return fetch(`${API_REF.API_BASE_URL}${API_REF.API_ALL_DATAMODELS}`, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",

@@ -27,7 +27,7 @@ module.exports = gql`
         status: String
         message: String
         count: String
-        data: HDR_MetaData_Result
+        data: HDR_CustomSearchData_Results
     }
     type HDR_MetaData_Result {
         id: String
@@ -98,7 +98,7 @@ module.exports = gql`
         abstract: String
         accessRights: String
         accessRequestCost: String
-        accesRequestDuration: String
+        accessRequestDuration: String
         datasetEndDate: String
         datasetStartDate: String
         releaseDate: String
@@ -116,5 +116,7 @@ module.exports = gql`
         jurisdiction: String
         doi: String
         fileSize: String
+        label: String
+        lastUpdated: String
     }
 `;

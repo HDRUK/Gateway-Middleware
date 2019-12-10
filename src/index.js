@@ -1,4 +1,5 @@
 const { ApolloServer } = require("apollo-server");
+
 require("dotenv").config();
 
 const logger = require("./utils/logger");
@@ -29,6 +30,7 @@ const getUser = async token => {
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    playground: process.env.NODE_ENV === "local" || process.env.NODE_ENV === "test" ? true : false,
     cors: { origin: process.env.FRONTEND_APP, credentials: true },
     context: async ({ req }) => {
         const tokenWithBearer = req.headers.authorization || "";

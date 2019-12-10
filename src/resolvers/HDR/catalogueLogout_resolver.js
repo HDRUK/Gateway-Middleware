@@ -1,9 +1,11 @@
 const fetch = require("node-fetch");
 
+const API_REF = require("../../utils/hdrAPIConfig");
+
 module.exports = {
     Query: {
         hdrCatalogueLogout: () => {
-            return fetch(`${process.env.API_BASE_URL}${process.env.API_LOGOUT}`, {
+            return fetch(`${API_REF.API_BASE_URL}${API_REF.API_LOGOUT}`, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
