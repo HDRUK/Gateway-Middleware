@@ -1,9 +1,11 @@
 const fetch = require("node-fetch");
 
+const API_REF = require("../../utils/hdrAPIConfig");
+
 module.exports = {
     Query: {
         hdrDataModelID: async (obj, params) => {
-            return fetch(`${process.env.API_BASE_URL}facets/${params.ID}/${process.env.API_MODEL_BY_ID}`, {
+            return fetch(`${API_REF.API_BASE_URL}facets/${params.ID}/${API_REF.API_MODEL_BY_ID}`, {
                 method: "GET",
                 headers: {
                     Accept: "*/*",

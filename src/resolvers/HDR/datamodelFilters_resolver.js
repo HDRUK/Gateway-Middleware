@@ -1,11 +1,13 @@
 const fetch = require("node-fetch");
 
+const API_REF = require("../../utils/hdrAPIConfig");
+
 module.exports = {
     Query: {
         hdrFilterValues: async () => {
             try {
                 const apiData = await fetch(
-                    `${process.env.API_BASE_URL}${process.env.API_FILTER_VALUES}${process.env.API_FILTER_FILTERS}`,
+                    `${API_REF.API_BASE_URL}${API_REF.API_FILTER_VALUES}${API_REF.API_FILTER_FILTERS}`,
                     {
                         method: "GET",
                         headers: {

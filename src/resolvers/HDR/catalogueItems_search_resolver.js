@@ -1,12 +1,14 @@
 const fetch = require("node-fetch");
 
+const API_REF = require("../../utils/hdrAPIConfig");
+
 module.exports = {
     Query: {
         // Reporting obj variable not used
         /* eslint-disable */
         hdrCatalogueItemsSearch: (obj, params) => {
             /* eslint-enable */
-            return fetch(`${process.env.API_BASE_URL}${process.env.API_SEARCH}`, {
+            return fetch(`${API_REF.API_BASE_URL}${API_REF.API_SEARCH}`, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
@@ -17,8 +19,8 @@ module.exports = {
                     searchTerm: params.searchTerm,
                     limit: parseInt(params.recordLimit, 10),
                     offset: parseInt(params.recordOffset, 10),
-                    domainTypes: [process.env.API_DOMAINTYPES],
-                    dataModelTypes: [process.env.API_DATAMODELTYPES],
+                    domainTypes: [API_REF.API_DOMAINTYPES],
+                    dataModelTypes: [API_REF.API_DATAMODELTYPES],
                     labelOnly: false,
                     classifiers: [],
                     classifierFilter: null,
