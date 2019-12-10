@@ -98,7 +98,7 @@ module.exports = gql`
         abstract: String
         accessRights: String
         accessRequestCost: String
-        accesRequestDuration: String
+        accessRequestDuration: String
         datasetEndDate: String
         datasetStartDate: String
         releaseDate: String
