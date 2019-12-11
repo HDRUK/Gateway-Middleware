@@ -1,46 +1,6 @@
 --- 
 version: 0.2 
  
-env: 
-    variables: 
-        SERVICE: | 
-            apiVersion: v1  
-            kind: Service  
-            metadata:  
-              name: middleware-service  
-              namespace: hdrtest
-            spec:  
-              type: LoadBalancer  
-              ports:  
-              - port: 443 
-                targetPort: 5001  
-                protocol: TCP  
-              selector:  
-                app: middleware-pod 
-              externalTrafficPolicy: Local 
- 
-        DEPLOY: | 
-            apiVersion: apps/v1 
-            kind: Deployment 
-            metadata: 
-              name: middleware-deployment 
-              namespace: hdrtest 
-            spec: 
-              replicas: 3 
-              selector: 
-                matchLabels: 
-                  app: middleware-pod 
-              template: 
-                metadata: 
-                  labels:  
-                    app: middleware-pod 
-                spec: 
-                  containers: 
-                  - name: middleware 
-                    image: 098490641074.dkr.ecr.eu-west-2.amazonaws.com/middleware-test-repository:latest
-                    imagePullPolicy: Always 
-                    ports: 
-                    - containerPort: 5001 
 phases: 
     install: 
         commands: 
@@ -76,20 +36,15 @@ phases:
     build: 
         commands: 
             - echo updating deployment... 
+            - aws s3 cp $SERVICE_PATH .
+            - aws s3 cp $DEPLOY_PATH .
             #- kubectl delete deployment.apps/middleware-deployment service/middleware-service --namespace=$NAMESPACE 
             #- kubectl set image deployment.apps/middleware-deployment middleware=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG --record --namespace=$NAMESPACE 
  
     post_build: 
         commands: 
-            #uncomment the 5 lines BELOW this if CONGIG in variables above change 
-            - echo creating deploy file... 
-            - touch deploy.yml 
-            - echo "$DEPLOY">>deploys.yml 
             - echo exposing deployment to load balancer... 
-            - kubectl apply -f deploys.yml --validate=false 
-            - echo creating service file... 
-            - touch service.yml 
-            - echo "$SERVICE">>service.yml 
+            - kubectl apply -f deploy.yml --validate=false 
             - echo exposing deployment to load balancer... 
             - kubectl apply -f service.yml --validate=false 
             - kubectl get deployments --namespace=$NAMESPACE 
