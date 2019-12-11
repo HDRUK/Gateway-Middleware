@@ -7,6 +7,7 @@ module.exports = {
         hdrCustomSearch: async (obj, params) => {
             try {
                 const filterItems = params.filterItems ? params.filterItems : "";
+                const sortField = params.sortField ? params.sortField : API_REF.API_DEFAULT_SEARCH;
 
                 const apiData = await fetch(`${API_REF.API_BASE_URL}${API_REF.API_CUSTOM_SEARCH}${filterItems}`, {
                     method: "POST",
@@ -18,7 +19,7 @@ module.exports = {
                         limit: parseInt(params.recordLimit, 10),
                         offset: parseInt(params.recordOffset, 10),
                         domainTypes: [API_REF.API_DOMAINTYPES],
-                        sort: params.sortField
+                        sort: sortField
                     })
                 });
                 const apiDataJSON = await apiData.json();

@@ -10,6 +10,7 @@ const API_REF = {
     API_MODEL_BY_ID: "profile/uk.ac.hdrukgateway/HdrUkProfilePluginService",
 
     API_DOMAINTYPES: "DataModel",
-    API_DATAMODELTYPES: "Data Asset"
+    API_DATAMODELTYPES: "Data Asset",
+    API_DEFAULT_SEARCH: "title"
 };
 module.exports = API_REF;
