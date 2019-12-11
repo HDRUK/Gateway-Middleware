@@ -6,7 +6,8 @@ const API_REF = {
     API_CUSTOM_SEARCH: "profiles/uk.ac.hdrukgateway/HdrUkProfilePluginService/customSearch",
     API_ALL_DATAMODELS: "dataModels",
     API_FILTER_VALUES: "dataModels/profile/values/uk.ac.hdrukgateway/HdrUkProfilePluginService",
-    API_FILTER_FILTERS: "?filter=publisher",
+    API_FILTER_FILTERS:
+        "?filter=publisher&filter=license&filter=geographicCoverage&filter=ageBand&filter=physicalSampleAvailability",
     API_MODEL_BY_ID: "profile/uk.ac.hdrukgateway/HdrUkProfilePluginService",
 
     API_DOMAINTYPES: "DataModel",
