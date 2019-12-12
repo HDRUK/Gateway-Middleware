@@ -5,7 +5,7 @@ describe("Check that the correct HDR API's defined", () => {
 
     it("should test that the Queries are all defined", () => {
         expect(typeDefs.definitions[0].name.value).toEqual("Query");
-        expect(typeDefs.definitions[0].fields.length).toEqual(6);
+        expect(typeDefs.definitions[0].fields.length).toEqual(7);
     });
 
     it("Should check that the hdrDataModelSearch Query is defined correctly", () => {
@@ -417,7 +417,7 @@ describe("The Metdata Catalogue API's are configured correctly", () => {
         expect(typeDefs.definitions[nextNum].fields[15].type.name.value).toEqual("String");
 
         expect(typeDefs.definitions[nextNum].fields[16].kind).toEqual("FieldDefinition");
-        expect(typeDefs.definitions[nextNum].fields[16].name.value).toEqual("accesRequestDuration");
+        expect(typeDefs.definitions[nextNum].fields[16].name.value).toEqual("accessRequestDuration");
         expect(typeDefs.definitions[nextNum].fields[16].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[nextNum].fields[16].type.name.value).toEqual("String");
 
