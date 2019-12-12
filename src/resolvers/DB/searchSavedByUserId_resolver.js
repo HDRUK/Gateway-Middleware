@@ -2,10 +2,11 @@ const dbConnect = require("../../db/db");
 const moment = require("moment");
 const logger = require("../../utils/logger");
 
-const getSearchSavedQueryString = userId => `
+const getSearchSavedQueryString = (userId, sort) => `
     SELECT searchsaved_id, searchsaved_searchaudit_id, searchsaved_created_on, searchsaved_name
     FROM searchsaved 
-    WHERE searchsaved_user_id='${userId}'`;
+    WHERE searchsaved_user_id='${userId}'
+    ORDER BY searchsaved_${sort.applied} ${sort.value}`;
 
 const getSearchAuditLogQueryString = searchAuditId => `
     SELECT searchaudit_detail, searchaudit_end_point, searchaudit_record_offset, searchaudit_record_limit, searchaudit_created_on
@@ -24,12 +25,16 @@ const getSearchSortQueryString = searchAuditId => `
 
 module.exports = {
     Query: {
-        getSearchSavedByUserID: async (_, { userId }, context) => {
+        getSearchSavedByUserID: async (_, { userId, sortField }, context) => {
             if (context.user.eduPersonTargetedID !== userId) {
                 logger.log("error", "User can't be authenticated");
             }
             try {
-                const searchSavedSQL = getSearchSavedQueryString(userId);
+                const sort = sortField || {
+                    applied: "created_on",
+                    value: "ASC"
+                };
+                const searchSavedSQL = getSearchSavedQueryString(userId, sort);
                 const searchSaved = await dbConnect.query(searchSavedSQL);
 
                 const searches = await Promise.all(

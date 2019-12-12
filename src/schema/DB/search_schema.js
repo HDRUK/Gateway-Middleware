@@ -6,7 +6,7 @@ module.exports = gql`
         getSearchFilters: [SearchFilters]
         getSearchSaved: [SearchSaved]
         getSearchSort: [SearchSort]
-        getSearchSavedByUserID(userId: String!): SearchSavedResult
+        getSearchSavedByUserID(userId: String!, sortField: SortInput): SearchSavedResult
     }
 
     extend type Mutation {
