@@ -40,10 +40,14 @@ describe("Check that the Search Schema is defined", () => {
 
     it("Should check the getSearchSavedByUserID input parameters", () => {
         const inputs = typeDefs.definitions[0].fields[4].arguments;
-        expect(inputs.length).toEqual(1);
+        expect(inputs.length).toEqual(2);
         expect(inputs[0].name.value).toEqual("userId");
         expect(inputs[0].type.kind).toEqual("NonNullType");
         expect(inputs[0].type.type.name.value).toEqual("String");
+
+        expect(inputs[1].name.value).toEqual("sortField");
+        expect(inputs[1].type.kind).toEqual("NamedType");
+        expect(inputs[1].type.name.value).toEqual("SortInput");
     });
 
     it("Should test that the Mutations are all defined", () => {
