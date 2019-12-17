@@ -18,7 +18,7 @@ const accessRequestedQueryString = (
         startDate ? ", accessrequest_project_startdate" : ""
     }${ico ? ", accessrequest_ico_registration" : ""}${benefits ? ", accessrequest_benefits" : ""}${
     evidence ? ", accessrequest_evidence" : ""
-}${number ? ", accessrequest_contact_number" : ""}${recipient ? ", accessrequest_recipient" : ""}
+}${number ? ", accessrequest_contact_number" : ""}${recipient ? ", accessrequest_recipient" : ""})
     VALUES ('${userId}', '${dataModelId}', '${aim}', '${linkedDatasets}', '${requirements}'${
     startDate ? `, '${startDate}'` : ""
 }${ico ? `, '${ico}'` : ""}${benefits ? `, '${benefits}'` : ""}${evidence ? `, '${evidence}'` : ""}${

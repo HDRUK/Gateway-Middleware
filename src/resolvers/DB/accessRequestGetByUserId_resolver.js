@@ -16,7 +16,7 @@ module.exports = {
             }
             try {
                 const sort = sortField || {
-                    applied: "requested_on",
+                    applied: "created_on",
                     value: "ASC"
                 };
                 const accessRequestsSQL = getAccessRequestsQueryString(userId, sort);
