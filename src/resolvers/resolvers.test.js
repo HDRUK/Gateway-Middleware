@@ -1,3 +1,5 @@
+const accessRequestCreate = require("./DB/accessRequestCreate_resolver");
+const accessRequestGetByUserId = require("./DB/accessRequestGetByUserId_resolver");
 const searchAuditLog = require("./DB/searchAuditLog_resolver");
 const searchFilters = require("./DB/searchFilters_resolver");
 const searchSort = require("./DB/searchSort_resolver");
@@ -17,6 +19,12 @@ const hdrCustomSearch = require("./HDR/customSearch_resolver");
 describe("index.js", () => {
     beforeEach(() => {});
 
+    it("Should test accessRequestCreate Resolver is being loded for use", () => {
+        expect(accessRequestCreate).not.toBeNull();
+    });
+    it("Should test accessRequestGetByUserId Resolver is being loded for use", () => {
+        expect(accessRequestGetByUserId).not.toBeNull();
+    });
     it("Should test searchAuditLog Resolver is being loded for use", () => {
         expect(searchAuditLog).not.toBeNull();
     });

@@ -7,6 +7,7 @@ module.exports = gql`
         getSearchSaved: [SearchSaved]
         getSearchSort: [SearchSort]
         getSearchSavedByUserID(userId: String!, sortField: SortInput): SearchSavedResult
+        getAccessRequestsByUserID(userId: String!, sortField: SortInput): AccessRequestResult
     }
 
     extend type Mutation {
@@ -21,6 +22,19 @@ module.exports = gql`
         ): SearchAuditLogResult
         searchSave(searchAuditId: String!, userId: String!, name: String): GenericQueryResult
         searchDelete(searchSavedId: String!): GenericQueryResult
+        requestAccess(
+            userId: String!
+            dataModelId: String!
+            aim: String!
+            linkedDatasets: String!
+            requirements: String!
+            startDate: String
+            ico: String
+            benefits: String
+            evidence: String
+            number: String
+            recipient: String
+        ): GenericQueryResult
     }
 
     input FilterInput {
@@ -102,5 +116,24 @@ module.exports = gql`
     }
     type DataId {
         id: String
+    }
+    type AccessRequestResult {
+        status: String
+        message: String
+        data: [AccessRequest]
+    }
+    type AccessRequest {
+        id: ID
+        dataModelId: String
+        aim: String
+        linkedDatasets: String
+        requirements: String
+        startDate: String
+        ico: String
+        benefits: String
+        evidence: String
+        contactNumber: String
+        recipient: String
+        createdOn: String
     }
 `;

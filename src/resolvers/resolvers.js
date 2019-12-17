@@ -1,4 +1,6 @@
 // The DB Resolvers
+const accessRequestCreate = require("./DB/accessRequestCreate_resolver");
+const accessRequestGetByUserId = require("./DB/accessRequestGetByUserId_resolver");
 const searchAuditLog = require("./DB/searchAuditLog_resolver");
 const searchAuditLogSave = require("./DB/searchAuditLogSave_resolver");
 const searchFilters = require("./DB/searchFilters_resolver");
@@ -18,6 +20,8 @@ const hdrFilterValues = require("./HDR/datamodelFilters_resolver");
 const hdrCustomSearch = require("./HDR/customSearch_resolver");
 
 module.exports = [
+    accessRequestCreate,
+    accessRequestGetByUserId,
     searchAuditLog,
     searchAuditLogSave,
     searchFilters,
