@@ -1,35 +1,41 @@
-version: 0.2 
- 
-phases: 
-    install: 
-        commands: 
-            #- echo install step... 
-            - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2& 
-            - timeout 15 sh -c "until docker info; do echo .; sleep 1; done" 
-        #If you use the Ubuntu standard image 2.0 or later 
-        runtime-versions: 
-            docker: 18 
-            nodejs: 10 
- 
-    pre_build: 
-        commands: 
-            - echo Logging in to Amazon ECR... 
-            - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION) 
- 
-    build: 
-        commands: 
-            - echo Build started on `date` 
-            - echo getting database host... 
-            - echo creating env file... 
-            - touch ./.env 
-            - echo "DATABASE="$DATABASE '\n'"DATABASE_USER="$DATABASE_USER '\n'"DATABASE_PASSWORD="$DATABASE_PASSWORD '\n'"DATABASE_HOST="$DATABASE_HOST '\n'"DATABASE_PORT="$DATABASE_PORT '\n'"PORT="$PORT '\n'"NODE_ENV="$NODE_ENV '\n'"API_BASE_URL="$API_BASE_URL '\n'"API_LOGIN="$API_LOGIN '\n'"API_LOGOUT="$API_LOGOUT '\n'"API_SEARCH="$API_SEARCH '\n'"API_ALL_DATAMODELS="$API_ALL_DATAMODELS '\n'"API_DOMAINTYPES="$API_DOMAINTYPES '\n'"API_DATAMODELTYPES="$API_DATAMODELTYPES '\n'"API_CUSTOM_SEARCH="$API_CUSTOM_SEARCH '\n'"API_FILTER_VALUES="$API_FILTER_VALUES '\n'"API_FILTER_FILTERS="$API_FILTER_FILTERS '\n'"USER_INFO="$USER_INFO '\n'"FRONTEND_APP="$FRONTEND_APP>>./.env 
-            - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG . 
-           
-    post_build: 
-        commands: 
-            - echo Build completed on `date` 
-            - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG 
-            - echo Pushing the Docker image... 
-            - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG 
- 
+version: 0.2
 
+phases:
+    install:
+        commands:
+            #- echo install step...
+            - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
+            - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+        #If you use the Ubuntu standard image 2.0 or later
+        runtime-versions:
+            docker: 18
+            nodejs: 10
+
+    pre_build:
+        commands:
+            - echo Logging in to Amazon ECR...
+            - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+
+    build:
+        commands:
+            - echo Build started on `date`
+            - echo getting database host...
+            - echo creating env file...
+            - touch ./.env
+            - echo "DATABASE="$DATABASE >> .env
+            - echo "DATABASE_USER="$DATABASE_USER >> .env
+            - echo "DATABASE_PASSWORD="$DATABASE_PASSWORD >> .env
+            - echo "DATABASE_HOST="$DATABASE_HOST >> .env
+            - echo "DATABASE_PORT="$DATABASE_PORT >> .env
+            - echo "PORT="$PORT >> .env
+            - echo "NODE_ENV="$NODE_ENV >> .env
+            - echo "FRONTEND_APP="$FRONTEND_APP >> .env
+            - echo "USER_INFO="$USER_INFO >> .env
+            - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+
+    post_build:
+        commands:
+            - echo Build completed on `date`
+            - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+            - echo Pushing the Docker image...
+            - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$IMAGE_TAG
