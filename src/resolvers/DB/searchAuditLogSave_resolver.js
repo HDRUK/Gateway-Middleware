@@ -1,10 +1,12 @@
 const dbConnect = require("../../db/db");
 
-const searchAuditLogQueryString = (userId, searchTerm, endPoint, offSet, recordLimit) => `
-    INSERT INTO searchaudit_log (${
-        userId ? "searchaudit_user_id, " : ""
-    }searchaudit_detail, searchaudit_end_point, searchaudit_record_offset, searchaudit_record_limit)
-    VALUES (${userId ? `'${userId}', ` : ""}'${searchTerm}', '${endPoint}', '${offSet}', '${recordLimit}')
+const searchAuditLogQueryString = (userId, sessionId, searchTerm, endPoint, offSet, recordLimit) => `
+    INSERT INTO searchaudit_log (${userId ? "searchaudit_user_id, " : ""}${
+    sessionId ? "searchaudit_session_id, " : ""
+}searchaudit_detail, searchaudit_end_point, searchaudit_record_offset, searchaudit_record_limit)
+    VALUES (${userId ? `'${userId}', ` : ""}${
+    sessionId ? `'${sessionId}', ` : ""
+}'${searchTerm}', '${endPoint}', '${offSet}', '${recordLimit}')
     RETURNING searchaudit_id`;
 
 const filterValuesString = (searchAuditId, value, type) => `('${searchAuditId}', '${value}', '${type}')`;
@@ -19,9 +21,19 @@ const searchSortQueryString = (searchAuditId, applied, value) => `
 
 module.exports = {
     Mutation: {
-        searchAuditLogSave: async (_, { userId = null, searchTerm, endPoint, offSet, recordLimit, filters, sort }) => {
+        searchAuditLogSave: async (
+            _,
+            { userId = null, sessionId = null, searchTerm, endPoint, offSet, recordLimit, filters, sort }
+        ) => {
             try {
-                const searchAuditLogSQL = searchAuditLogQueryString(userId, searchTerm, endPoint, offSet, recordLimit);
+                const searchAuditLogSQL = searchAuditLogQueryString(
+                    userId,
+                    sessionId,
+                    searchTerm,
+                    endPoint,
+                    offSet,
+                    recordLimit
+                );
                 const searchAudit = await dbConnect.query(searchAuditLogSQL);
                 const searchAuditId = searchAudit.rows[0].searchaudit_id;
 

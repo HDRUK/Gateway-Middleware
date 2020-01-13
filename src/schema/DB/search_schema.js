@@ -13,6 +13,7 @@ module.exports = gql`
     extend type Mutation {
         searchAuditLogSave(
             userId: String
+            sessionId: String
             searchTerm: String!
             endPoint: String!
             offSet: Int!
@@ -49,6 +50,7 @@ module.exports = gql`
     type SearchAudit_log {
         searchaudit_id: ID
         searchaudit_user_id: String
+        searchaudit_session_id: String
         searchaudit_detail: String
         searchaudit_end_point: String
         searchaudit_record_offset: Int
