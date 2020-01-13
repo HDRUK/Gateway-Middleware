@@ -82,34 +82,38 @@ describe("Check that the Search Schema is defined", () => {
     it("Should check the searchAuditLogSave input parameters", () => {
         const i = 1;
         const inputs = typeDefs.definitions[i].fields[0].arguments;
-        expect(inputs.length).toEqual(7);
+        expect(inputs.length).toEqual(8);
         expect(inputs[0].name.value).toEqual("userId");
         expect(inputs[0].type.kind).toEqual("NamedType");
         expect(inputs[0].type.name.value).toEqual("String");
 
-        expect(inputs[1].name.value).toEqual("searchTerm");
-        expect(inputs[1].type.kind).toEqual("NonNullType");
-        expect(inputs[1].type.type.name.value).toEqual("String");
+        expect(inputs[1].name.value).toEqual("sessionId");
+        expect(inputs[1].type.kind).toEqual("NamedType");
+        expect(inputs[1].type.name.value).toEqual("String");
 
-        expect(inputs[2].name.value).toEqual("endPoint");
+        expect(inputs[2].name.value).toEqual("searchTerm");
         expect(inputs[2].type.kind).toEqual("NonNullType");
         expect(inputs[2].type.type.name.value).toEqual("String");
 
-        expect(inputs[3].name.value).toEqual("offSet");
+        expect(inputs[3].name.value).toEqual("endPoint");
         expect(inputs[3].type.kind).toEqual("NonNullType");
-        expect(inputs[3].type.type.name.value).toEqual("Int");
+        expect(inputs[3].type.type.name.value).toEqual("String");
 
-        expect(inputs[4].name.value).toEqual("recordLimit");
+        expect(inputs[4].name.value).toEqual("offSet");
         expect(inputs[4].type.kind).toEqual("NonNullType");
         expect(inputs[4].type.type.name.value).toEqual("Int");
 
-        expect(inputs[5].name.value).toEqual("filters");
-        expect(inputs[5].type.kind).toEqual("ListType");
-        expect(inputs[5].type.type.name.value).toEqual("FilterInput");
+        expect(inputs[5].name.value).toEqual("recordLimit");
+        expect(inputs[5].type.kind).toEqual("NonNullType");
+        expect(inputs[5].type.type.name.value).toEqual("Int");
 
-        expect(inputs[6].name.value).toEqual("sort");
-        expect(inputs[6].type.kind).toEqual("NonNullType");
-        expect(inputs[6].type.type.name.value).toEqual("SortInput");
+        expect(inputs[6].name.value).toEqual("filters");
+        expect(inputs[6].type.kind).toEqual("ListType");
+        expect(inputs[6].type.type.name.value).toEqual("FilterInput");
+
+        expect(inputs[7].name.value).toEqual("sort");
+        expect(inputs[7].type.kind).toEqual("NonNullType");
+        expect(inputs[7].type.type.name.value).toEqual("SortInput");
     });
 
     it("Should check that the searchSave Mutation is defined correctly", () => {
@@ -264,7 +268,7 @@ describe("The DB Search is configured correctly", () => {
         const i = 4;
         expect(typeDefs.definitions[i].kind).toEqual("ObjectTypeDefinition");
         expect(typeDefs.definitions[i].name.value).toEqual("SearchAudit_log");
-        expect(typeDefs.definitions[i].fields).toHaveLength(8);
+        expect(typeDefs.definitions[i].fields).toHaveLength(9);
 
         // The field definitions
         expect(typeDefs.definitions[i].fields[0].name.value).toEqual("searchaudit_id");
@@ -275,29 +279,33 @@ describe("The DB Search is configured correctly", () => {
         expect(typeDefs.definitions[i].fields[1].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[1].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[2].name.value).toEqual("searchaudit_detail");
+        expect(typeDefs.definitions[i].fields[2].name.value).toEqual("searchaudit_session_id");
         expect(typeDefs.definitions[i].fields[2].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[2].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("searchaudit_end_point");
+        expect(typeDefs.definitions[i].fields[3].name.value).toEqual("searchaudit_detail");
         expect(typeDefs.definitions[i].fields[3].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[3].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[4].name.value).toEqual("searchaudit_record_offset");
+        expect(typeDefs.definitions[i].fields[4].name.value).toEqual("searchaudit_end_point");
         expect(typeDefs.definitions[i].fields[4].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[i].fields[4].type.name.value).toEqual("Int");
+        expect(typeDefs.definitions[i].fields[4].type.name.value).toEqual("String");
 
-        expect(typeDefs.definitions[i].fields[5].name.value).toEqual("searchaudit_record_limit");
+        expect(typeDefs.definitions[i].fields[5].name.value).toEqual("searchaudit_record_offset");
         expect(typeDefs.definitions[i].fields[5].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[5].type.name.value).toEqual("Int");
 
-        expect(typeDefs.definitions[i].fields[6].name.value).toEqual("searchaudit_created_on");
+        expect(typeDefs.definitions[i].fields[6].name.value).toEqual("searchaudit_record_limit");
         expect(typeDefs.definitions[i].fields[6].type.kind).toEqual("NamedType");
-        expect(typeDefs.definitions[i].fields[6].type.name.value).toEqual("String");
+        expect(typeDefs.definitions[i].fields[6].type.name.value).toEqual("Int");
 
-        expect(typeDefs.definitions[i].fields[7].name.value).toEqual("searchaudit_updated_on");
+        expect(typeDefs.definitions[i].fields[7].name.value).toEqual("searchaudit_created_on");
         expect(typeDefs.definitions[i].fields[7].type.kind).toEqual("NamedType");
         expect(typeDefs.definitions[i].fields[7].type.name.value).toEqual("String");
+
+        expect(typeDefs.definitions[i].fields[8].name.value).toEqual("searchaudit_updated_on");
+        expect(typeDefs.definitions[i].fields[8].type.kind).toEqual("NamedType");
+        expect(typeDefs.definitions[i].fields[8].type.name.value).toEqual("String");
     });
 
     it("Should test the getSearchFilters Field Definition", () => {
