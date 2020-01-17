@@ -44,8 +44,7 @@ module.exports = {
                     });
                 })
                 .catch(err => {
-                    console.log("FFFF");
-                    return "ERROR", err;
+                    return `ERROR ${err}`;
                 });
         }
     }

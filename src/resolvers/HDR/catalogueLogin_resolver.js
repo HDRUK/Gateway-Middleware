@@ -28,7 +28,7 @@ module.exports = {
                     // return dataBack;
                 })
                 .catch(err => {
-                    return "ERROR", err;
+                    return `ERROR ${err}`;
                 });
         }
     }

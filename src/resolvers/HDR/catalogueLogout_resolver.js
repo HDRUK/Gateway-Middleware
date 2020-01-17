@@ -21,7 +21,7 @@ module.exports = {
                     return res;
                 })
                 .catch(err => {
-                    return "ERROR", err;
+                    return `ERROR ${err}`;
                 });
         }
     }

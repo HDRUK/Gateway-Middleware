@@ -29,8 +29,8 @@ module.exports = {
                     count: apiDataJSON.count,
                     data: apiDataJSON.results
                 };
-            } catch (e) {
-                return "ERROR", e;
+            } catch (err) {
+                return `ERROR ${err}`;
             }
         }
     }

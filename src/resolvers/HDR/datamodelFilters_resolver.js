@@ -26,8 +26,8 @@ module.exports = {
                     message: apiData.statusText,
                     data: dataO
                 };
-            } catch (e) {
-                return "ERROR", e;
+            } catch (err) {
+                return `ERROR ${err}`;
             }
         }
     }
