@@ -4,9 +4,6 @@ module.exports = gql`
     extend type Query {
         hdrDataModelSearch: HDR_MetaData
         hdrDataModelID(ID: String!): HDR_MetaData_ID
-        hdrCatalogueLogin: HDR_CatalogueLogin
-        hdrCatalogueLogout: HDR_CatalogueLogout
-        hdrCatalogueItemsSearch(searchTerm: String, recordOffset: Int!, recordLimit: Int!): HDR_MetaData
         hdrFilterValues(filterValues: [String]): HDR_FilterData
         hdrCustomSearch(
             searchTerm: String
@@ -49,23 +46,7 @@ module.exports = gql`
         label: String
         lastUpdated: String
     }
-    type HDR_CatalogueLogin {
-        status: String
-        url: String
-        result: HDR_Login_Result
-    }
 
-    type HDR_Login_Result {
-        id: ID
-        emailAddress: String
-        firstName: String
-        lastName: String
-        userRole: String
-        disabled: Boolean
-    }
-    type HDR_CatalogueLogout {
-        status: String
-    }
     type HDR_FilterData {
         status: String
         message: String

@@ -8,7 +8,6 @@ const searchSave = require("./DB/searchSave_resolver");
 const searchDelete = require("./DB/searchDelete_resolver");
 const searchSavedByUserId = require("./DB/searchSavedByUserId_resolver");
 
-const hdrCatalogueItemsSearch = require("./HDR/catalogueItems_search_resolver");
 const hdrDataModelSearch = require("./HDR/datamodelSearch_resolver");
 const hdrDataModelID = require("./HDR/datamodelID_resolver");
 const hdrFilterValues = require("./HDR/datamodelFilters_resolver");
@@ -43,9 +42,6 @@ describe("index.js", () => {
     });
     it("Should test searchSavedByUserId Resolver is being loded for use", () => {
         expect(searchSavedByUserId).not.toBeNull();
-    });
-    it("Should test hdrCatalogueItemsSearch Resolver is being loded for use", () => {
-        expect(hdrCatalogueItemsSearch).not.toBeNull();
     });
     it("Should test hdrDataModelSearch Resolver is being loded for use", () => {
         expect(hdrDataModelSearch).not.toBeNull();

@@ -11,7 +11,6 @@ const searchDelete = require("./DB/searchDelete_resolver");
 const searchSavedByUserId = require("./DB/searchSavedByUserId_resolver");
 
 // The API Resolvers
-const hdrCatalogueItemsSearch = require("./HDR/catalogueItems_search_resolver");
 const hdrDataModelSearch = require("./HDR/datamodelSearch_resolver");
 const hdrDataModelID = require("./HDR/datamodelID_resolver");
 const hdrFilterValues = require("./HDR/datamodelFilters_resolver");
@@ -28,7 +27,6 @@ module.exports = [
     searchSave,
     searchDelete,
     searchSavedByUserId,
-    hdrCatalogueItemsSearch,
     hdrDataModelSearch,
     hdrDataModelID,
     hdrFilterValues,
