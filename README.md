@@ -1,51 +1,83 @@
-# HDR_MVP_Gateway_Middleware
+# HDR GATEWAY
 
----
+## Node GraphQL Data Handler Server
 
-### Pre Instalation requirements
+## Licence
 
-> The postgreSQL Database.
->
-> [Bitbucket Repository](https://bitbucket.org/hdr_mvp_gateway/hdr_gateway_postgresql_db)
+Apache 2
+
+## Author(s)
+
+[IBM UK](https://www.ibm.com/uk-en)  
+[Health Data Research UK](https://www.hdruk.ac.uk/)  
+[University of Oxford, Department of Computer Science](http://www.cs.ox.ac.uk/)  
+[Parity](https://www.parity.net/)  
+[METADATAWORKS](https://metadataworks.co.uk/)  
+​
+
+## Contributors
+
+To be added
+​
+
+## Relevant Repositories
+
+React Front End Application [Repository](https://github.com/HDRUK/Gateway-Frontend)  
+Node Web and Authentication Server [Repository](https://github.com/HDRUK/Gateway-Auth-Server)  
+Node Graphql Data Handler [Repository](https://github.com/HDRUK/Gateway-Middleware)  
+Postgres Database Creation and update [Repository](https://github.com/HDRUK/Gateway-DB)  
+​
+
+## Overview
+
+This appliaction, is the data handling layer of the Gateway. It is a standalone GraphQL server, which talks to the database and the Meta Data Catalogue API's
 
 ### Installation / Running Instructions
 
-> Clone the bitbucket repsoitory
->
-> `git clone https://TrevorWardCIC@bitbucket.org/hdr_mvp_gateway/hdr_mvp_gateway_middleware.git`
->
-> From a command prompt (Optional to use VS Code), in the cloned directory
->
-> `npm install` To install all dependencies
->
-> `npm run dev` To run in node monitor mode. `npm start` Will run without monitor
+This is a node application, all node modules are installed locally.
 
-### Setup the .env file
+Download or clone from Code Repsitory
 
-The following values need to be configured (There is a .env-example)
+[Middleware Repository](https://github.com/HDRUK/Gateway-Middleware)
 
-DATABASE=
-DATABASE_USER=
-DATABASE_PASSWORD=
-DATABASE_HOST=
-DATABASE_PORT=
+from the downloaded directory run
+
+npm install
+
+This will install the application on port 5001 by default.
+
+### .env file
+
+Create an environment file with the following options:
+
+> DATABASE=
+> DATABASE_USER=
+> DATABASE_PASSWORD=
+> DATABASE_HOST=
+> DATABASE_PORT=
+> PORT=5001
+> NODE_ENV=local
+
+> FRONTEND_APP=http://localhost:5003
+>
+> > this is to the port of the running Web Auth Server or if developing locally without the Auth server to 3000 for the React App.
+
+> USER_INFO=
+>
+> > Open Athens URL to the user info
+
+### Example .env file
+
+DATABASE=HDR_DB
+DATABASE_USER=postgres
+DATABASE_PASSWORD=admin
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
 PORT=5001
 NODE_ENV=local
 
-API_BASE_URL=https://metadata-catalogue.org/hdruk/api/
-API_LOGIN=authentication/login
-API_LOGOUT=authentication/logout
-API_ALL_SEARCH=dataModels
-
-API_DOMAINTYPES=DataElement, DataModel
-API_DATAMODELTYPES=Data Asset
-
-### The GraphQL Queries / Mutations
-
-The main Query available is
-
-> hdrCatalogueItemsSearch(searchTerm: String, recordOffset: Int!, recordLimit: Int!)  
-> The recordOffset and recordLimit are required.
+FRONTEND_APP=http://localhost:5003
+USER_INFO=https://open_athens/userinfo
 
 ### Useful sites:
 
@@ -53,8 +85,32 @@ The main Query available is
 
 [Apollo Tutorial](https://www.apollographql.com/docs/tutorial/)
 
----
+## Running the Application
 
-```
+`npm run dev`
 
-```
+> Runs the application in node watch mode
+
+`npm start`
+
+> runs the application without monitoring
+
+## Other commands
+
+`npm run lint`
+
+> runs the Lint checker against the code base
+
+`npm run test:coverage`
+
+> runs the unit tests
+
+`npm run sonarQube`
+
+> runs the sonarQube code validator. You will need to either have a local copy running or configure a web service.
+
+## Deployment
+
+This is a node application, and requires deploying as such.
+
+It needs to have the React Web front end built into its path and the environment variables configured accordingly.
